@@ -14,8 +14,6 @@ public class Record {
     private int rating;
     private int duration;   //in millisecond
 
-    //Getter and Setter
-
     /**
      * This is the default constructor of Record class. It create an instance of Record of 7000m
      * in 30 minutes with rating 18 and start time of current time
