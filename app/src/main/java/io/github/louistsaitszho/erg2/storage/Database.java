@@ -26,4 +26,9 @@ public class Database extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    //TODO Add
+    //TODO Delete
+    //TODO Modify
+    //
 }
