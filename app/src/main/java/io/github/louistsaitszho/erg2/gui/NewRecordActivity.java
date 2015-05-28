@@ -1,16 +1,20 @@
 package io.github.louistsaitszho.erg2.gui;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import io.github.louistsaitszho.erg2.R;
+import io.github.louistsaitszho.erg2.storage.DatabaseHelper;
 
 public class NewRecordActivity extends ActionBarActivity {
 
+    DatabaseHelper dbh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dbh = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_record);
     }
