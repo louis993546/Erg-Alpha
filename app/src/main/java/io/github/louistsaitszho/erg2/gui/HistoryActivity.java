@@ -51,4 +51,5 @@ public class HistoryActivity extends ActionBarActivity {
         Intent intent = new Intent(this, NewRecordActivity.class);
         startActivity(intent);
     }
+
 }
