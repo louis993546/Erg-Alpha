@@ -1,11 +1,13 @@
 package io.github.louistsaitszho.erg2.gui;
 
 import android.content.Intent;
+import android.graphics.Outline;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 
 import io.github.louistsaitszho.erg2.R;
 
@@ -17,6 +19,15 @@ public class HistoryActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         //TODO load records from database
+        //TODO create FAB
+        ViewOutlineProvider vop = new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
+                outline = new Outline();
+            }
+        };
+        findViewById(R.id.fab).setOutlineProvider(vop);
     }
 
 
