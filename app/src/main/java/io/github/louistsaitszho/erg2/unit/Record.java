@@ -6,9 +6,13 @@ import java.util.GregorianCalendar;
  * Each records stores the total distance and duration only.
  */
 public class Record {
+    public static final int METER_PER_SECOND = 1;
+    public static final int KM_PER_HOUR = 2;
     private static final double DEFAULT_DISTANCE = 7000;
     private static final int DEFAULT_RATING = 18;
     private static final int DEFAULT_DURATION = 1800000;
+    private static final int SECOND_TO_MILLISECOND = 1000;
+    private static final int HOUR_TO_SECOND = 3600;
     private GregorianCalendar startTime;    //start date time
     private double distance; //in meter
     private int rating;
@@ -71,4 +75,20 @@ public class Record {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+    public double getSpeed(int unit) {
+        double speed = 0;
+        switch (unit) {
+            case METER_PER_SECOND:
+                speed = (distance / duration) / SECOND_TO_MILLISECOND;
+                break;
+            case KM_PER_HOUR:
+                speed = ((distance / 1000) / HOUR_TO_SECOND) / SECOND_TO_MILLISECOND ;
+                break;
+            default:
+                speed = (distance / duration) / SECOND_TO_MILLISECOND;  //return m/s
+        }
+        return speed;
+    }
+
 }

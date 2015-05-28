@@ -16,6 +16,7 @@ public class HistoryActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+        //TODO load records from database
     }
 
 
@@ -45,11 +46,13 @@ public class HistoryActivity extends ActionBarActivity {
     public void addNewSettingActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+        //TODO reload everything???
     }
 
     public void addNewRecordActivity(View view) {
         Intent intent = new Intent(this, NewRecordActivity.class);
         startActivity(intent);
+        //TODO update from database
     }
 
 }
