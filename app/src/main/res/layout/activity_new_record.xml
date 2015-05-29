@@ -212,14 +212,6 @@
             android:hint="Stroke/minute"
             android:inputType="number" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/LLRating"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    e
 
 </RelativeLayout>

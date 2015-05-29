@@ -13,8 +13,6 @@ public class Record {
     public static final int SECOND_TO_MILLISECOND = 1000;
     public static final int MINUTE_TO_SECOND = 60;
     public static final int HOUR_TO_SECOND = 3600;
-    //    public static final int INVALID_INT = -1;
-//    public static final GregorianCalendar INVALED_GC = null;    //new GregorianCalendar(-1, -1, -1);
     private static final double DEFAULT_DISTANCE = 7000;
     private static final int DEFAULT_RATING = 18;
     private static final int DEFAULT_DURATION = 1800000;
@@ -50,6 +48,16 @@ public class Record {
         setDistance(distance);
     }
 
+    /**
+     * This constructor create an instance of Record according to 4 inputs, but this time the
+     * startTime is in string format, which is how it have been stored in database
+     *
+     * @param startTime is the start time of this instance of record in String, which will be
+     *                  converted back to GregorianCalendar object first
+     * @param duration  is the total duration of this record in millisecond
+     * @param rating    is the overall average rating of this record
+     * @param distance  is the total distance of this record in meter
+     */
     public Record(String startTime, int duration, int rating, double distance) {
         this();
         setStartTime(StringToGC(startTime));
@@ -116,6 +124,12 @@ public class Record {
         return output.toString();
     }
 
+    /**
+     * This method converts a GregorianCalendar instance to a string, which is how to store
+     * startTime in database
+     * @param gc is a GregorianCalendar object (i.e. startTime)
+     * @return the string to be store, with each value separated by a "/"
+     */
     private String GCToString(GregorianCalendar gc) {
         StringBuilder output = new StringBuilder();
         ArrayList<Integer> dateTime = new ArrayList<Integer>();
@@ -134,6 +148,12 @@ public class Record {
         return output.toString();
     }
 
+    /**
+     * This method reverse the process of GCToString, converts the startTime in string form back to
+     * a GregorianCalendar instance
+     * @param s is a string of startTime
+     * @return a GregorianCalendar object
+     */
     private GregorianCalendar StringToGC(String s) {
         ArrayList<Integer> values = new ArrayList<Integer>();
         for (String value : s.split("/", 5)) {
@@ -142,6 +162,10 @@ public class Record {
         return new GregorianCalendar(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4));
     }
 
+    /**
+     * This method return the startTime in string form
+     * @return startTime in string form
+     */
     public String startTimeToString() {
         return GCToString(getStartTime());
     }
