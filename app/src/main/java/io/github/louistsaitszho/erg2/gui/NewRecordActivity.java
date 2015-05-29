@@ -7,23 +7,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.GregorianCalendar;
 
 import io.github.louistsaitszho.erg2.R;
-import io.github.louistsaitszho.erg2.storage.DatabaseHelper;
+import io.github.louistsaitszho.erg2.storage.HistoryDb;
 import io.github.louistsaitszho.erg2.unit.Record;
 
 public class NewRecordActivity extends ActionBarActivity {
 
-    DatabaseHelper dbh;
+    HistoryDb hdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        dbh = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_record);
+        hdb = new HistoryDb(this);
     }
 
     @Override
@@ -91,18 +90,17 @@ public class NewRecordActivity extends ActionBarActivity {
             Record r = new Record(startTime, duration, rating, distance);
 
             //TODO temporary test
-            TextView tv = (TextView) findViewById(R.id.textView);
-            tv.setText(r.toString());
+//            TextView tv = (TextView) findViewById(R.id.textView);
+//            tv.setText(r.toString());
 
             return r;
         } catch (NullPointerException | NumberFormatException e) {
             //TODO remind user some fields are invalid/empty
             Record r = new Record();
-            TextView tv = (TextView) findViewById(R.id.textView);
-            tv.setText(r.toString());
+//            TextView tv = (TextView) findViewById(R.id.textView);
+//            tv.setText(r.toString());
             return r;
         }
-
     }
 
     /**
@@ -208,6 +206,7 @@ public class NewRecordActivity extends ActionBarActivity {
 
     public boolean saveData(Record r) {
         //TODO access Database
+        hdb.addRecord(r);
         return true;
     }
 }

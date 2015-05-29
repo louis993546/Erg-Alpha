@@ -19,21 +19,13 @@ public class HistoryDbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE IF EXISTS" + HistoryEntry.TABLE_NAME + " (" +
-                    HistoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "CREATE TABLE IF NOT EXISTS " + HistoryEntry.TABLE_NAME + " (" +
+                    HistoryEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     HistoryEntry.COLUMN_NAME_DATETIME + TEXT_TYPE + COMMA_SEP +
                     HistoryEntry.COLUMN_NAME_DURATION + INTEGER_TYPE + COMMA_SEP +
                     HistoryEntry.COLUMN_NAME_DISTANCE + INTEGER_TYPE + COMMA_SEP +
-                    HistoryEntry.COLUMN_NAME_RATING + INTEGER_TYPE + COMMA_SEP +
+                    HistoryEntry.COLUMN_NAME_RATING + INTEGER_TYPE +
                     " )";
-
-    //TODO finish this sentence
-//    private static final String SQL_INSERT_ENTRIES =
-//            "INSERT INTO " + HistoryEntry.TABLE_NAME + " (" +
-//                    HistoryEntry.COLUMN_NAME_DATETIME + COMMA_SEP +
-//                    HistoryEntry.COLUMN_NAME_DURATION + COMMA_SEP +
-//                    HistoryEntry.COLUMN_NAME_DISTANCE + COMMA_SEP +
-//                    HistoryEntry.COLUMN_NAME_RATING + ") VALUES ( "+
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + HistoryEntry.TABLE_NAME;
@@ -41,12 +33,16 @@ public class HistoryDbHelper extends SQLiteOpenHelper {
     public HistoryDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
+    @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //TODO how to do this?
+        db.execSQL(SQL_DELETE_ENTRIES); //FIXME Incorrect implementation
+        onCreate(db);
     }
+
 }

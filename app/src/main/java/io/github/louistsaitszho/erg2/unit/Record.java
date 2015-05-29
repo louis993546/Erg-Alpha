@@ -1,5 +1,6 @@
 package io.github.louistsaitszho.erg2.unit;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -105,6 +106,36 @@ public class Record {
         output.append("Start Date: " + startTime.get(Calendar.YEAR) + "/" + (1 + startTime.get(Calendar.MONTH)) + "/" + startTime.get(Calendar.DAY_OF_MONTH) + "\n");
         output.append("Start Time: " + startTime.get(Calendar.HOUR_OF_DAY) + ":" + startTime.get(Calendar.MINUTE));
         return output.toString();
+    }
+
+    private String GCToString(GregorianCalendar gc) {
+        StringBuilder output = new StringBuilder();
+        ArrayList<Integer> dateTime = new ArrayList<Integer>();
+
+        dateTime.add(gc.get(Calendar.YEAR));
+        dateTime.add(gc.get(Calendar.MONTH));
+        dateTime.add(gc.get(Calendar.DAY_OF_MONTH));
+        dateTime.add(gc.get(Calendar.HOUR));
+        dateTime.add(gc.get(Calendar.MINUTE));
+
+        for (int i : dateTime) {
+            output.append(i);
+            output.append('/');
+        }
+        output.deleteCharAt(output.length() - 1);
+        return output.toString();
+    }
+
+    private GregorianCalendar StringToGC(String s) {
+        ArrayList<Integer> values = new ArrayList<Integer>();
+        for (String value : s.split("/", 5)) {
+            values.add(Integer.parseInt(value));
+        }
+        return new GregorianCalendar(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4));
+    }
+
+    public String startTimeToString() {
+        return GCToString(getStartTime());
     }
 
 }
