@@ -1,5 +1,6 @@
 package io.github.louistsaitszho.erg2.unit;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -8,12 +9,15 @@ import java.util.GregorianCalendar;
 public class Record {
     public static final int METER_PER_SECOND = 1;
     public static final int KM_PER_HOUR = 2;
+    public static final int SECOND_TO_MILLISECOND = 1000;
+    public static final int MINUTE_TO_SECOND = 60;
+    public static final int HOUR_TO_SECOND = 3600;
+    public static final int INVALID_INT = -1;
+    public static final GregorianCalendar INVALED_GC = new GregorianCalendar(-1, -1, -1);
     private static final double DEFAULT_DISTANCE = 7000;
     private static final int DEFAULT_RATING = 18;
     private static final int DEFAULT_DURATION = 1800000;
-    private static final int SECOND_TO_MILLISECOND = 1000;
-    private static final int HOUR_TO_SECOND = 3600;
-    private GregorianCalendar startTime;    //start date time
+    public GregorianCalendar startTime;    //start date time
     private double distance; //in meter
     private int rating;
     private int duration;   //in millisecond
@@ -89,6 +93,17 @@ public class Record {
                 speed = (distance / duration) / SECOND_TO_MILLISECOND;  //return m/s
         }
         return speed;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        output.append("Distance: " + getDistance() + "\n");
+        output.append("Duration: " + getDuration() + "\n");
+        output.append("rating: " + rating + "\n");
+        output.append("Start Date: " + startTime.get(Calendar.YEAR) + "/" + startTime.get(Calendar.MONTH) + "/" + startTime.get(Calendar.DAY_OF_MONTH) + "\n");
+        output.append("Start Time: " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
+        return output.toString();
     }
 
 }
