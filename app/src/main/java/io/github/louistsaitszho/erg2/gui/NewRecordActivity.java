@@ -58,19 +58,14 @@ public class NewRecordActivity extends ActionBarActivity {
                                 dialog.cancel();
                             }
                         });
-
                 AlertDialog alert11 = builder1.create();
                 alert11.show();
                 return true;
             case (R.id.ConfirmAction):
                 Record r = getData();
-                if (saveData(r) == true) {
-                    finish();
-                    return true;
-                }
-                else {
-                    return false;
-                }
+                saveData(r);
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -159,13 +154,13 @@ public class NewRecordActivity extends ActionBarActivity {
         String dateHourString = timeHourET.getText().toString();
         String dateMinuteString = timeMinuteET.getText().toString();
         int year = Integer.parseInt(dateYearString);
-        int month = Integer.parseInt(dateMonthString);
+        int month = Integer.parseInt(dateMonthString) - 1;
         int day = Integer.parseInt(dateDayString);
         int hour = Integer.parseInt(dateHourString);
         int minute = Integer.parseInt(dateMinuteString);
 
         try {
-            return new GregorianCalendar(2015, month, day, hour, minute);
+            return new GregorianCalendar(year, month, day, hour, minute);
         } catch (IllegalArgumentException e) {
             throw new NullPointerException("Invalid start date time");
         }

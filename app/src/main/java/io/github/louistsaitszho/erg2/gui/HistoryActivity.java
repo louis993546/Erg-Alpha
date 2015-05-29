@@ -11,13 +11,28 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import io.github.louistsaitszho.erg2.R;
 import io.github.louistsaitszho.erg2.storage.HistoryDb;
+import io.github.louistsaitszho.erg2.unit.Record;
 
 
 public class HistoryActivity extends ActionBarActivity {
 
     HistoryDb hdb;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateView();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateView();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +56,25 @@ public class HistoryActivity extends ActionBarActivity {
         Cursor c = hdb.selectRecord();
         StringBuilder output = new StringBuilder();
         int count = c.getCount();
+        int columnCount = c.getColumnCount();
+        ArrayList<Record> ral = new ArrayList<>();
+        output.append("count: " + count + "\n\n");
         if (count > 0) {
-            output.append("count: " + count + "\n\n");
             do {
-                for (int j = 0; j < c.getColumnCount(); j++) {
-                    output.append(c.getString(j) + "\n");
+                ArrayList<String> incomingSAL = new ArrayList<>();
+                for (int j = 1; j < columnCount; j++) {
+                    incomingSAL.add(c.getString(j));
                 }
-                output.append("\n\n");
-//                output.append("ID: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_ID) + "\n");
-//                output.append("Duration: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_DURATION) + "\n");
-//                output.append("Distance: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_DISTANCE) + "\n");
-//                output.append("Start Date Time: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_DATETIME) + "\n");
-//                output.append("Rating: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_RATING) + "\n\n");
+                Record tempRecord = new Record(incomingSAL.get(0), Integer.parseInt(incomingSAL.get(2)), Integer.parseInt(incomingSAL.get(3)), Double.parseDouble(incomingSAL.get(1)));
+                ral.add(tempRecord);
             }
             while (c.moveToNext());
-            TextView tv2 = (TextView) findViewById(R.id.textView2);
-            tv2.setText(output.toString());
+            for (Record r : ral) {
+                output.append(r.toString() + "\n\n");
+            }
         }
+        TextView tv2 = (TextView) findViewById(R.id.textView2);
+        tv2.setText(output.toString());
     }
 
     @Override
@@ -92,8 +109,6 @@ public class HistoryActivity extends ActionBarActivity {
     public void addNewRecordActivity(View view) {
         Intent intent = new Intent(this, NewRecordActivity.class);
         startActivity(intent);
-        updateView();
-        //TODO update from database
     }
 
 }

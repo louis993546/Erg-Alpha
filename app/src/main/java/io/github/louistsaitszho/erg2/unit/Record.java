@@ -50,6 +50,14 @@ public class Record {
         setDistance(distance);
     }
 
+    public Record(String startTime, int duration, int rating, double distance) {
+        this();
+        setStartTime(StringToGC(startTime));
+        setDuration(duration);
+        setRating(rating);
+        setDistance(distance);
+    }
+
     public GregorianCalendar getStartTime() {
         return startTime;
     }
@@ -115,7 +123,7 @@ public class Record {
         dateTime.add(gc.get(Calendar.YEAR));
         dateTime.add(gc.get(Calendar.MONTH));
         dateTime.add(gc.get(Calendar.DAY_OF_MONTH));
-        dateTime.add(gc.get(Calendar.HOUR));
+        dateTime.add(gc.get(Calendar.HOUR_OF_DAY));
         dateTime.add(gc.get(Calendar.MINUTE));
 
         for (int i : dateTime) {
