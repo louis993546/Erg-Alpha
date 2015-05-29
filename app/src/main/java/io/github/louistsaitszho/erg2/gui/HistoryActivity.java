@@ -36,6 +36,7 @@ public class HistoryActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.actual_title_activity_history);
         setContentView(R.layout.activity_history);
         //TODO load records from database
         hdb = new HistoryDb(this);
