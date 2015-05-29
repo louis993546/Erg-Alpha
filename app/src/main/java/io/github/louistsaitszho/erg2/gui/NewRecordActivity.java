@@ -1,5 +1,7 @@
 package io.github.louistsaitszho.erg2.gui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -40,6 +42,26 @@ public class NewRecordActivity extends ActionBarActivity {
 
         switch (id) {
             case (R.id.DiscardAction):
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setTitle("Discard changes");
+                builder1.setMessage("All changes will be discard.");
+                builder1.setCancelable(true);
+                builder1.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                finish();
+                            }
+                        });
+                builder1.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
                 return true;
             case (R.id.ConfirmAction):
                 Record r = getData();
@@ -53,6 +75,12 @@ public class NewRecordActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * @return a record value according to user input, but if user input is invalid, the return
+     * instance of record will be a default instance of Record (30 minutes 7000 m)
+     * TODO: instead of returning a default record, it should throw some exception out to notify
+     * user to correct their mistakes
+     */
     public Record getData() {
         try {
             int duration = getDuration();
@@ -77,6 +105,9 @@ public class NewRecordActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * @return duration user have specified in interger of millisecond
+     */
     public int getDuration() {
         EditText durationHourET = (EditText) findViewById(R.id.editDurationHour);
         EditText durationMinuteET = (EditText) findViewById(R.id.editDurationMinute);
@@ -111,6 +142,11 @@ public class NewRecordActivity extends ActionBarActivity {
         return duration;
     }
 
+    /**
+     * @throws NullPointerException when GregorianCalendar constructor fail to create a instance
+     * of time based on user inputs
+     * @return a instance of GregorianCalendar of user specified start date time
+     */
     public GregorianCalendar getStartTime() {
         EditText dateYearET = (EditText) findViewById(R.id.editDateYear);
         EditText dateMonthET = (EditText) findViewById(R.id.editDateMonth);
@@ -135,6 +171,11 @@ public class NewRecordActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * @throws NumberFormatException when user input is not a valid number or value is smaller
+     * than 0
+     * @return distance in floating point (double)
+     */
     public double getDistance() {
         EditText distanceET = (EditText) findViewById(R.id.editDistance);
         String distanceString = distanceET.getText().toString();
@@ -148,6 +189,10 @@ public class NewRecordActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * @throws NumberFormatException when user input is not a valid integer or value is small than 0
+     * @return rating in int
+     */
     public int getRating() {
         EditText ratingET = (EditText) findViewById(R.id.editRating);
         String ratingString = ratingET.getText().toString();
