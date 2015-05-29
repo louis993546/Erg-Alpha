@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import io.github.louistsaitszho.erg2.R;
 import io.github.louistsaitszho.erg2.storage.DatabaseHelper;
+import io.github.louistsaitszho.erg2.unit.Record;
 
 public class NewRecordActivity extends ActionBarActivity {
 
@@ -33,11 +34,29 @@ public class NewRecordActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case (R.id.DiscardAction):
+                return true;
+            case (R.id.ConfirmAction):
+                Record r = getData();
+                if (saveData(r) == true)
+                    return true;
+                else {
+                    return false;
+                }
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    public Record getData() {
+        //TODO get data from each textfields
+        Record r = new Record();
+        return r;
+    }
+
+    public boolean saveData(Record r) {
+        //TODO access Database
+        return true;
     }
 }

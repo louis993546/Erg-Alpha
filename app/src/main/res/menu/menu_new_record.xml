@@ -1,14 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:Erg2="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="io.github.louistsaitszho.erg2.gui.NewRecordActivity">
 
     <item
+        android:id="@+id/DiscardAction"
         android:icon="@drawable/ic_action_cancel"
-        android:showAsAction="ifRoom"
-        android:title="Discard" />
+        android:title="Discard"
+        Erg2:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/ConfirmAction"
         android:icon="@drawable/ic_action_accept"
-        android:showAsAction="ifRoom"
-        android:title="Confirm" />
+        android:title="Confirm"
+        Erg2:showAsAction="ifRoom" />
 </menu>
