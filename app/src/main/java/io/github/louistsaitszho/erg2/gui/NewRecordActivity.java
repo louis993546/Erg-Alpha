@@ -64,8 +64,10 @@ public class NewRecordActivity extends ActionBarActivity {
                 return true;
             case (R.id.ConfirmAction):
                 Record r = getData();
-                if (saveData(r) == true)
+                if (saveData(r) == true) {
+                    finish();
                     return true;
+                }
                 else {
                     return false;
                 }

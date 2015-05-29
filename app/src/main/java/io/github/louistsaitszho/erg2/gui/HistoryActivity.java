@@ -12,7 +12,6 @@ import android.view.ViewOutlineProvider;
 import android.widget.TextView;
 
 import io.github.louistsaitszho.erg2.R;
-import io.github.louistsaitszho.erg2.storage.HistoryContract;
 import io.github.louistsaitszho.erg2.storage.HistoryDb;
 
 
@@ -44,13 +43,18 @@ public class HistoryActivity extends ActionBarActivity {
         int count = c.getCount();
         if (count > 0) {
             output.append("count: " + count + "\n\n");
-            while (c.moveToNext()) {
-                output.append("ID: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_ID) + "\n");
-                output.append("Duration: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_DURATION) + "\n");
-                output.append("Distance: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_DISTANCE) + "\n");
-                output.append("Start Date Time: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_DATETIME) + "\n");
-                output.append("Rating: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_RATING) + "\n\n");
+            do {
+                for (int j = 0; j < c.getColumnCount(); j++) {
+                    output.append(c.getString(j) + "\n");
+                }
+                output.append("\n\n");
+//                output.append("ID: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_ID) + "\n");
+//                output.append("Duration: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_DURATION) + "\n");
+//                output.append("Distance: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_DISTANCE) + "\n");
+//                output.append("Start Date Time: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_DATETIME) + "\n");
+//                output.append("Rating: " + c.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_NAME_RATING) + "\n\n");
             }
+            while (c.moveToNext());
             TextView tv2 = (TextView) findViewById(R.id.textView2);
             tv2.setText(output.toString());
         }
