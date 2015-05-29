@@ -54,19 +54,27 @@ public class NewRecordActivity extends ActionBarActivity {
     }
 
     public Record getData() {
-        //TODO get data from each textfields
-        int duration = getDuration();
-        double distance = getDistance();
-        int rating = getRating();
-        GregorianCalendar startTime = getStartTime();
+        try {
+            int duration = getDuration();
+            double distance = getDistance();
+            int rating = getRating();
+            GregorianCalendar startTime = getStartTime();   //TODO this result is very inconsistent
 
-        Record r = new Record(startTime, duration, rating, distance);
+            Record r = new Record(startTime, duration, rating, distance);
 
-        //TODO temporaty test
-        TextView tv = (TextView) findViewById(R.id.textView);
-        tv.setText(r.toString());
+            //TODO temporary test
+            TextView tv = (TextView) findViewById(R.id.textView);
+            tv.setText(r.toString());
 
-        return r;
+            return r;
+        } catch (NullPointerException | NumberFormatException e) {
+            //TODO remind user some fields are invalid/empty
+            Record r = new Record();
+            TextView tv = (TextView) findViewById(R.id.textView);
+            tv.setText(r.toString());
+            return r;
+        }
+
     }
 
     public int getDuration() {
@@ -77,21 +85,29 @@ public class NewRecordActivity extends ActionBarActivity {
         String durationMinuteString = durationMinuteET.getText().toString();
         String durationSecondString = durationSecondET.getText().toString();
         int duration = 0;
-        int durationHour = Integer.parseInt(durationHourString);
-        if (durationHour >= 0 && durationHour <= 24) {
-            int durationMinute = Integer.parseInt(durationMinuteString);
-            if (durationMinute >= 0 && durationMinute < 60) {
-                int durationSecond = Integer.parseInt(durationSecondString);
-                if (durationSecond >= 0 && durationSecond < 60) {
-                    duration += durationHour * Record.HOUR_TO_SECOND * Record.SECOND_TO_MILLISECOND;
-                    duration += durationMinute * Record.MINUTE_TO_SECOND * Record.SECOND_TO_MILLISECOND;
-                    duration += durationSecond * Record.SECOND_TO_MILLISECOND;
-                } else
-                    duration = Record.INVALID_INT;
-            } else
-                duration = Record.INVALID_INT;
-        } else
-            duration = Record.INVALID_INT;
+        try {
+            int durationHour = Integer.parseInt(durationHourString);
+            if (durationHour >= 0 && durationHour <= 24) {
+                int durationMinute = Integer.parseInt(durationMinuteString);
+                if (durationMinute >= 0 && durationMinute < 60) {
+                    int durationSecond = Integer.parseInt(durationSecondString);
+                    if (durationSecond >= 0 && durationSecond < 60) {
+                        duration += durationHour * Record.HOUR_TO_SECOND * Record.SECOND_TO_MILLISECOND;
+                        duration += durationMinute * Record.MINUTE_TO_SECOND * Record.SECOND_TO_MILLISECOND;
+                        duration += durationSecond * Record.SECOND_TO_MILLISECOND;
+                    } else {
+                        throw new NullPointerException("Invalid duration(second)");
+                    }
+                } else {
+                    throw new NullPointerException("Invalid duration(minute)");
+                }
+            } else {
+                throw new NullPointerException("Invalid duration(Hour)");
+            }
+        } catch (NumberFormatException e) {
+            throw new NullPointerException("Invalid duration: " + e.toString());
+        }
+
         return duration;
     }
 
@@ -111,32 +127,39 @@ public class NewRecordActivity extends ActionBarActivity {
         int day = Integer.parseInt(dateDayString);
         int hour = Integer.parseInt(dateHourString);
         int minute = Integer.parseInt(dateMinuteString);
+
         try {
-            return new GregorianCalendar(year, month, day, hour, minute);
+            return new GregorianCalendar(2015, month, day, hour, minute);
         } catch (IllegalArgumentException e) {
-            return Record.INVALED_GC;
+            throw new NullPointerException("Invalid start date time");
         }
     }
 
     public double getDistance() {
         EditText distanceET = (EditText) findViewById(R.id.editDistance);
         String distanceString = distanceET.getText().toString();
-        double distance = Double.parseDouble(distanceString);
-        if (distance < 0)
-            distance = Record.INVALID_INT;
-        return distance;
+        try {
+            double distance = Double.parseDouble(distanceString);
+            if (distance < 0)
+                throw new NumberFormatException("Invalid distance");
+            return distance;
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Invalid distance: " + e.toString());
+        }
     }
 
     public int getRating() {
         EditText ratingET = (EditText) findViewById(R.id.editRating);
         String ratingString = ratingET.getText().toString();
-        int rating = Integer.parseInt(ratingString);
-        if (rating < 0)
-            rating = Record.INVALID_INT;
-        return rating;
+        try {
+            int rating = Integer.parseInt(ratingString);
+            if (rating < 0)
+                throw new NumberFormatException("Invalid rating");
+            return rating;
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Invalid rating: " + e.toString());
+        }
     }
-
-
 
     public boolean saveData(Record r) {
         //TODO access Database
