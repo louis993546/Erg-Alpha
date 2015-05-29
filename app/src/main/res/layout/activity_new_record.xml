@@ -212,6 +212,6 @@
             android:hint="Stroke/minute"
             android:inputType="number" />
     </LinearLayout>
-    e
+
 
 </RelativeLayout>

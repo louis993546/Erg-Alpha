@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -73,8 +72,10 @@ public class HistoryActivity extends ActionBarActivity {
                 output.append(r.toString() + "\n\n");
             }
         }
-        TextView tv2 = (TextView) findViewById(R.id.textView2);
-        tv2.setText(output.toString());
+
+        //TODO update it dynamically
+//        TextView tv2 = (TextView) findViewById(R.id.textView2);
+//        tv2.setText(output.toString());
     }
 
     @Override
