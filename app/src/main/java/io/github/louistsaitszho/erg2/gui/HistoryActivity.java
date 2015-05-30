@@ -5,10 +5,13 @@ import android.database.Cursor;
 import android.graphics.Outline;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -19,7 +22,28 @@ import io.github.louistsaitszho.erg2.unit.Record;
 
 public class HistoryActivity extends ActionBarActivity {
 
-    HistoryDb hdb;
+    private HistoryDb hdb;
+    private RecyclerView rv;
+    private RecyclerView.Adapter rvAdapter;
+    private RecyclerView.LayoutManager rvLM;
+    private ArrayList<Record> ral;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTitle(R.string.actual_title_activity_history);
+        setContentView(R.layout.activity_history);
+        hdb = new HistoryDb(this);
+        updateView();
+        ViewOutlineProvider vop = new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
+                outline = new Outline();
+            }
+        };
+        findViewById(R.id.fab).setOutlineProvider(vop);
+    }
 
     @Override
     protected void onResume() {
@@ -31,52 +55,6 @@ public class HistoryActivity extends ActionBarActivity {
     protected void onRestart() {
         super.onRestart();
         updateView();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitle(R.string.actual_title_activity_history);
-        setContentView(R.layout.activity_history);
-        //TODO load records from database
-        hdb = new HistoryDb(this);
-        updateView();
-        //TODO create FAB
-        ViewOutlineProvider vop = new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
-                outline = new Outline();
-            }
-        };
-        findViewById(R.id.fab).setOutlineProvider(vop);
-    }
-
-    public void updateView() {
-        Cursor c = hdb.selectRecord();
-        StringBuilder output = new StringBuilder();
-        int count = c.getCount();
-        int columnCount = c.getColumnCount();
-        ArrayList<Record> ral = new ArrayList<>();
-        output.append("count: " + count + "\n\n");
-        if (count > 0) {
-            do {
-                ArrayList<String> incomingSAL = new ArrayList<>();
-                for (int j = 1; j < columnCount; j++) {
-                    incomingSAL.add(c.getString(j));
-                }
-                Record tempRecord = new Record(incomingSAL.get(0), Integer.parseInt(incomingSAL.get(2)), Integer.parseInt(incomingSAL.get(3)), Double.parseDouble(incomingSAL.get(1)));
-                ral.add(tempRecord);
-            }
-            while (c.moveToNext());
-            for (Record r : ral) {
-                output.append(r.toString() + "\n\n");
-            }
-        }
-
-        //TODO update it dynamically
-//        TextView tv2 = (TextView) findViewById(R.id.textView2);
-//        tv2.setText(output.toString());
     }
 
     @Override
@@ -100,6 +78,46 @@ public class HistoryActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public ArrayList<Record> getRecords() {
+        Cursor c = hdb.selectRecord();
+        int count = c.getCount();
+        int columnCount = c.getColumnCount();
+        ArrayList<Record> ral = new ArrayList<>();
+        if (count > 0) {
+            do {
+                ArrayList<String> incomingSAL = new ArrayList<>();
+                for (int j = 1; j < columnCount; j++) {
+                    incomingSAL.add(c.getString(j));
+                }
+                Record tempRecord = new Record(incomingSAL.get(0), Integer.parseInt(incomingSAL.get(2)), Integer.parseInt(incomingSAL.get(3)), Double.parseDouble(incomingSAL.get(1)));
+                ral.add(tempRecord);
+            }
+            while (c.moveToNext());
+        }
+        return ral;
+    }
+
+    public void updateView() {
+        ral = getRecords();
+        rv = (RecyclerView) findViewById(R.id.HistoryRV);
+        rv.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayout.VERTICAL);
+        rv.setLayoutManager(llm);
+        rvAdapter = new HistoryAdapter(ral);
+        rv.setAdapter(rvAdapter);
+        ViewOutlineProvider vop = new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                int size = getResources().getDimensionPixelSize(R.dimen.fab_size);
+                outline = new Outline();
+            }
+        };
+        findViewById(R.id.fab).setOutlineProvider(vop);
+    }
+
+
 
     public void addNewRecordActivity(View view) {
         Intent intent = new Intent(this, NewRecordActivity.class);

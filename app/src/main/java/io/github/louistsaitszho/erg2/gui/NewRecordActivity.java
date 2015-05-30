@@ -82,21 +82,12 @@ public class NewRecordActivity extends ActionBarActivity {
             int duration = getDuration();
             double distance = getDistance();
             int rating = getRating();
-            GregorianCalendar startTime = getStartTime();   //TODO this result is very inconsistent
+            GregorianCalendar startTime = getStartTime();
 
-            Record r = new Record(startTime, duration, rating, distance);
-
-            //TODO temporary test
-//            TextView tv = (TextView) findViewById(R.id.textView);
-//            tv.setText(r.toString());
-
-            return r;
+            return new Record(startTime, duration, rating, distance);
         } catch (NullPointerException | NumberFormatException e) {
             //TODO remind user some fields are invalid/empty
-            Record r = new Record();
-//            TextView tv = (TextView) findViewById(R.id.textView);
-//            tv.setText(r.toString());
-            return r;
+            return new Record();
         }
     }
 
@@ -116,7 +107,7 @@ public class NewRecordActivity extends ActionBarActivity {
             if (durationHour >= 0 && durationHour <= 24) {
                 int durationMinute = Integer.parseInt(durationMinuteString);
                 if (durationMinute >= 0 && durationMinute < 60) {
-                    int durationSecond = Integer.parseInt(durationSecondString);
+                    double durationSecond = Double.parseDouble(durationSecondString);
                     if (durationSecond >= 0 && durationSecond < 60) {
                         duration += durationHour * Record.HOUR_TO_SECOND * Record.SECOND_TO_MILLISECOND;
                         duration += durationMinute * Record.MINUTE_TO_SECOND * Record.SECOND_TO_MILLISECOND;
@@ -202,7 +193,6 @@ public class NewRecordActivity extends ActionBarActivity {
     }
 
     public boolean saveData(Record r) {
-        //TODO access Database
         hdb.addRecord(r);
         return true;
     }

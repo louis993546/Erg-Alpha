@@ -60,7 +60,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Second"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:nextFocusDown="@+id/editDistance" />
 
     </LinearLayout>

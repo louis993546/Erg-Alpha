@@ -99,7 +99,7 @@ public class Record {
     }
 
     public double getSpeed(int unit) {
-        double speed = 0;
+        double speed;
         switch (unit) {
             case METER_PER_SECOND:
                 speed = (distance / duration) / SECOND_TO_MILLISECOND;
@@ -115,13 +115,7 @@ public class Record {
 
     @Override
     public String toString() {
-        StringBuilder output = new StringBuilder();
-        output.append("Distance: " + getDistance() + "\n");
-        output.append("Duration: " + getDuration() + "\n");
-        output.append("rating: " + rating + "\n");
-        output.append("Start Date: " + startTime.get(Calendar.YEAR) + "/" + (1 + startTime.get(Calendar.MONTH)) + "/" + startTime.get(Calendar.DAY_OF_MONTH) + "\n");
-        output.append("Start Time: " + startTime.get(Calendar.HOUR_OF_DAY) + ":" + startTime.get(Calendar.MINUTE));
-        return output.toString();
+        return "Distance: " + getDistance() + "\n" + "Duration: " + getDuration() + "\n" + "rating: " + rating + "\n" + "Start Date: " + startTime.get(Calendar.YEAR) + "/" + (1 + startTime.get(Calendar.MONTH)) + "/" + startTime.get(Calendar.DAY_OF_MONTH) + "\n" + "Start Time: " + startTime.get(Calendar.HOUR_OF_DAY) + ":" + startTime.get(Calendar.MINUTE);
     }
 
     /**
@@ -132,7 +126,7 @@ public class Record {
      */
     private String GCToString(GregorianCalendar gc) {
         StringBuilder output = new StringBuilder();
-        ArrayList<Integer> dateTime = new ArrayList<Integer>();
+        ArrayList<Integer> dateTime = new ArrayList<>();
 
         dateTime.add(gc.get(Calendar.YEAR));
         dateTime.add(gc.get(Calendar.MONTH));
@@ -155,7 +149,7 @@ public class Record {
      * @return a GregorianCalendar object
      */
     private GregorianCalendar StringToGC(String s) {
-        ArrayList<Integer> values = new ArrayList<Integer>();
+        ArrayList<Integer> values = new ArrayList<>();
         for (String value : s.split("/", 5)) {
             values.add(Integer.parseInt(value));
         }
@@ -168,6 +162,11 @@ public class Record {
      */
     public String startTimeToString() {
         return GCToString(getStartTime());
+    }
+
+    public int per500() {
+        double a = getDistance() / 500;
+        return (int) (getDuration() / a);
     }
 
 }
