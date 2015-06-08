@@ -126,19 +126,17 @@ public class Record {
      */
     private String GCToString(GregorianCalendar gc) {
         StringBuilder output = new StringBuilder();
-        ArrayList<Integer> dateTime = new ArrayList<>();
 
-        dateTime.add(gc.get(Calendar.YEAR));
-        dateTime.add(gc.get(Calendar.MONTH));
-        dateTime.add(gc.get(Calendar.DAY_OF_MONTH));
-        dateTime.add(gc.get(Calendar.HOUR_OF_DAY));
-        dateTime.add(gc.get(Calendar.MINUTE));
+        output.append(gc.get(Calendar.YEAR));
+        output.append("/");
+        output.append(gc.get(Calendar.MONTH));
+        output.append("/");
+        output.append(gc.get(Calendar.DAY_OF_MONTH));
+        output.append(" ");
+        output.append(gc.get(Calendar.HOUR_OF_DAY));
+        output.append(":");
+        output.append(gc.get(Calendar.MINUTE));
 
-        for (int i : dateTime) {
-            output.append(i);
-            output.append('/');
-        }
-        output.deleteCharAt(output.length() - 1);
         return output.toString();
     }
 

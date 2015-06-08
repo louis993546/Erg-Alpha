@@ -19,7 +19,7 @@
                 android:id="@+id/DurationTV"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="5"
                 android:gravity="right"
                 android:padding="16dp"
                 android:text="30:00" />
@@ -33,7 +33,7 @@
                 android:id="@+id/RatingTV"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="6"
                 android:gravity="right"
                 android:padding="16dp"
                 android:text="16 s/min" />
@@ -87,7 +87,7 @@
                 android:id="@+id/DistanceTV"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="5"
                 android:gravity="right"
                 android:padding="16dp"
                 android:text="7000m" />
@@ -102,7 +102,7 @@
                 android:id="@+id/startDateTimeTV"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="6"
                 android:gravity="right"
                 android:padding="16dp"
                 android:text="" />

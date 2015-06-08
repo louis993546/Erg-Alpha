@@ -28,20 +28,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder2 vh, int i) {
         Record r = ral.get(i);
-//        vh.durTV.setText("" + r.getDuration());
-//        vh.disTV.setText("" + r.getDistance());
-//        vh.ratTV.setText("" + r.getRating());
-//        vh.perTV.setText("" + r.per500());
-
-//        vh.durTV.setText("30:00");
-//        vh.disTV.setText("8000m");
-//        vh.ratTV.setText("16 s/min");
-//        vh.perTV.setText("1:58.6");
 
         vh.durTV.setText(durationToString(r.getDuration()));
         vh.disTV.setText(distanceToString(r.getDistance()));
         vh.ratTV.setText(ratingToString(r.getRating()));
         vh.perTV.setText(p5mToString(r.per500()));
+        vh.sdtTV.setText(startDateTimeToString(r));
     }
 
     @Override
@@ -72,14 +64,20 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public String p5mToString(int ms) {
         int minute;
         int second;
+        StringBuilder secondString = new StringBuilder();
         int millisecond;
         StringBuilder output = new StringBuilder();
         minute = ms / MINUTE_TO_MS;
         ms = ms % MINUTE_TO_MS;
         second = ms / SECOND_TO_MS;
+        if (second < 10) {
+            secondString.append("0").append(second);
+        } else {
+            secondString.append(second);
+        }
         ms = ms % SECOND_TO_MS;
         millisecond = ms / 100;
-        output.append(minute).append(":").append(second).append(".").append(millisecond);    //DO NOT PUT UNIT HERE
+        output.append(minute).append(":").append(secondString).append(".").append(millisecond);    //DO NOT PUT UNIT HERE
         return output.toString();
     }
 
@@ -91,11 +89,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return (d + "m");
     }
 
+    public String startDateTimeToString(Record r) {
+        return r.startTimeToString();
+    }
+
     public static class ViewHolder2 extends RecyclerView.ViewHolder {
         protected TextView durTV;
         protected TextView disTV;
         protected TextView ratTV;
         protected TextView perTV;
+        protected TextView sdtTV;
 
         public ViewHolder2(View v) {
             super(v);
@@ -103,6 +106,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             disTV = (TextView) v.findViewById(R.id.DistanceTV);
             ratTV = (TextView) v.findViewById(R.id.RatingTV);
             perTV = (TextView) v.findViewById(R.id.p5mValueTV);
+            sdtTV = (TextView) v.findViewById(R.id.startDateTimeTV);
         }
     }
 
