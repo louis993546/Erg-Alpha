@@ -168,7 +168,6 @@ public class Record {
             }
             return new GregorianCalendar(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4));
         } catch (NumberFormatException e) {
-            //TODO I don't know, since this should not happen
             return new GregorianCalendar();
         }
     }

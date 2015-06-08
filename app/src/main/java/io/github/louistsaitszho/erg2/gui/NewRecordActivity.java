@@ -85,9 +85,8 @@ public class NewRecordActivity extends ActionBarActivity {
         try {
             int duration = getDuration();
             double distance = getDistance();
-            int rating = getRating();
             GregorianCalendar startTime = getStartTime();
-
+            int rating = getRating();
             return new Record(startTime, duration, rating, distance);
         } catch (NullPointerException | NumberFormatException e) {
             throw new NullPointerException("Invalid input");
@@ -101,7 +100,6 @@ public class NewRecordActivity extends ActionBarActivity {
         adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
-                finish();
             }
         });
         AlertDialog ad = adb.create();
@@ -155,6 +153,7 @@ public class NewRecordActivity extends ActionBarActivity {
      * @return a instance of GregorianCalendar of user specified start date time
      * TODO something is probably wrong here
      * TODO change it to datapicker
+     * TODO create a lot of invalidInputAlertDialog here for null input
      */
     public GregorianCalendar getStartTime() {
         EditText dateYearET = (EditText) findViewById(R.id.editDateYear);
@@ -196,6 +195,7 @@ public class NewRecordActivity extends ActionBarActivity {
             }
             return distance;
         } catch (NumberFormatException e) {
+            invalidInputAlertDialog("Invalid input", "Please input a valid distance.");
             throw new NumberFormatException("Invalid distance: " + e.toString());
         }
     }
@@ -215,6 +215,7 @@ public class NewRecordActivity extends ActionBarActivity {
             }
             return rating;
         } catch (NumberFormatException e) {
+            invalidInputAlertDialog("Invalid input", "Please input a valid rating.");
             throw new NumberFormatException("Invalid rating: " + e.toString());
         }
     }
