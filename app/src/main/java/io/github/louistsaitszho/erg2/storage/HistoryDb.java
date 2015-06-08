@@ -21,7 +21,7 @@ public class HistoryDb {
 
     public long addRecord(Record r) {
         ContentValues cv = new ContentValues();
-        cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_DATETIME, r.startTimeToString());
+        cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_DATETIME, r.startTimeToString(1));
         cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_DISTANCE, r.getDistance());
         cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_DURATION, r.getDuration());
         cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_RATING, r.getRating());

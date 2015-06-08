@@ -1,5 +1,7 @@
 package io.github.louistsaitszho.erg2.unit;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -124,7 +126,7 @@ public class Record {
      * @param gc is a GregorianCalendar object (i.e. startTime)
      * @return the string to be store, with each value separated by a "/"
      */
-    private String GCToString(GregorianCalendar gc) {
+    private String GCToString(GregorianCalendar gc, int style) {
         StringBuilder output = new StringBuilder();
 
         output.append(gc.get(Calendar.YEAR));
@@ -132,10 +134,20 @@ public class Record {
         output.append(gc.get(Calendar.MONTH));
         output.append("/");
         output.append(gc.get(Calendar.DAY_OF_MONTH));
-        output.append(" ");
-        output.append(gc.get(Calendar.HOUR_OF_DAY));
-        output.append(":");
-        output.append(gc.get(Calendar.MINUTE));
+        if (style == 1) //For storage
+        {
+            output.append("/");
+            output.append(gc.get(Calendar.HOUR_OF_DAY));
+            output.append("/");
+            output.append(gc.get(Calendar.MINUTE));
+        } else //for display
+        {
+            output.append(" ");
+            output.append(gc.get(Calendar.HOUR_OF_DAY));
+            output.append(":");
+            output.append(gc.get(Calendar.MINUTE));
+        }
+
 
         return output.toString();
     }
@@ -148,18 +160,25 @@ public class Record {
      */
     private GregorianCalendar StringToGC(String s) {
         ArrayList<Integer> values = new ArrayList<>();
-        for (String value : s.split("/", 5)) {
-            values.add(Integer.parseInt(value));
+        Log.d("StringToGC", s);
+        try {
+            for (String value : s.split("/", 5)) {
+                Log.d("Value", value);
+                values.add(Integer.parseInt(value));
+            }
+            return new GregorianCalendar(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4));
+        } catch (NumberFormatException e) {
+            //TODO I don't know, since this should not happen
+            return new GregorianCalendar();
         }
-        return new GregorianCalendar(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4));
     }
 
     /**
      * This method return the startTime in string form
      * @return startTime in string form
      */
-    public String startTimeToString() {
-        return GCToString(getStartTime());
+    public String startTimeToString(int style) {
+        return GCToString(getStartTime(), style);
     }
 
     public int per500() {

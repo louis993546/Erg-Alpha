@@ -16,7 +16,7 @@ import io.github.louistsaitszho.erg2.unit.Record;
  */
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder2> {
 
-    private static final int HOUR_TO_MS = 36000000;
+    private static final int HOUR_TO_MS = 3600000;
     private static final int MINUTE_TO_MS = 60000;
     private static final int SECOND_TO_MS = 1000;
     private ArrayList<Record> ral;
@@ -90,7 +90,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     public String startDateTimeToString(Record r) {
-        return r.startTimeToString();
+        return r.startTimeToString(2);
     }
 
     public static class ViewHolder2 extends RecyclerView.ViewHolder {

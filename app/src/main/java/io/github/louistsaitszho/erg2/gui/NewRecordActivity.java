@@ -172,7 +172,6 @@ public class NewRecordActivity extends ActionBarActivity {
         int day = Integer.parseInt(dateDayString);
         int hour = Integer.parseInt(dateHourString);
         int minute = Integer.parseInt(dateMinuteString);
-
         try {
             return new GregorianCalendar(year, month, day, hour, minute);
         } catch (IllegalArgumentException e) {
