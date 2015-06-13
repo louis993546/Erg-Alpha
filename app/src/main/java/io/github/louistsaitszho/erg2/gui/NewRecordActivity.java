@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import io.github.louistsaitszho.erg2.unit.Record;
 
 public class NewRecordActivity extends ActionBarActivity {
 
+    public static final String TAG = NewRecordActivity.class.getName();
     HistoryDb hdb;
 
     @Override
@@ -108,7 +110,7 @@ public class NewRecordActivity extends ActionBarActivity {
 
     /**
      * @return duration user have specified in interger of millisecond
-     * TODO change it to some kind of
+     * TODO change it to some kind of date time picker
      */
     public int getDuration() {
         EditText durationHourET = (EditText) findViewById(R.id.editDurationHour);
@@ -125,24 +127,36 @@ public class NewRecordActivity extends ActionBarActivity {
                 if (durationMinute >= 0 && durationMinute < 60) {
                     double durationSecond = Double.parseDouble(durationSecondString);
                     if (durationSecond >= 0 && durationSecond < 60) {
-                        duration += durationHour * Record.HOUR_TO_SECOND * Record.SECOND_TO_MILLISECOND;
-                        duration += durationMinute * Record.MINUTE_TO_SECOND * Record.SECOND_TO_MILLISECOND;
-                        duration += durationSecond * Record.SECOND_TO_MILLISECOND;
-                        return duration;
+                        if ((durationSecond == 0) && (durationMinute == 0) && (durationHour == 0)) {
+                            invalidInputAlertDialog("Invalid input", "Duration must not be zero");
+                            Log.d(TAG, "Input duration is 0");
+                            throw new NullPointerException("Invalid input");
+                        }
+                        else
+                        {
+                            duration += durationHour * Record.HOUR_TO_SECOND * Record.SECOND_TO_MILLISECOND;
+                            duration += durationMinute * Record.MINUTE_TO_SECOND * Record.SECOND_TO_MILLISECOND;
+                            duration += durationSecond * Record.SECOND_TO_MILLISECOND;
+                            return duration;
+                        }
                     } else {
                         invalidInputAlertDialog("Invalid input", "Please input a valid duration(second).");
+                        Log.d(TAG, "Invalid duration(second)");
                         throw new NullPointerException("Invalid duration(second)");
                     }
                 } else {
                     invalidInputAlertDialog("Invalid input", "Please input a valid duration(minute).");
+                    Log.d(TAG, "Invalid duration(minute)");
                     throw new NullPointerException("Invalid duration(minute)");
                 }
             } else {
                 invalidInputAlertDialog("Invalid input", "Please input a valid duration(hour).");
+                Log.d(TAG, "Invalid duration(hour)");
                 throw new NullPointerException("Invalid duration(Hour)");
             }
         } catch (NumberFormatException e) {
             invalidInputAlertDialog("Invalid input", "Please input a valid duration.");
+            Log.d(TAG, "Invalid duration(Number format exception)");
             throw new NullPointerException("Invalid duration: " + e.toString());
         }
     }
@@ -156,26 +170,35 @@ public class NewRecordActivity extends ActionBarActivity {
      * TODO create a lot of invalidInputAlertDialog here for null input
      */
     public GregorianCalendar getStartTime() {
-        EditText dateYearET = (EditText) findViewById(R.id.editDateYear);
-        EditText dateMonthET = (EditText) findViewById(R.id.editDateMonth);
-        EditText dateDayET = (EditText) findViewById(R.id.editDateDay);
-        EditText timeHourET = (EditText) findViewById(R.id.editTimeHour);
-        EditText timeMinuteET = (EditText) findViewById(R.id.editTimeMinute);
-        String dateYearString = dateYearET.getText().toString();
-        String dateMonthString = dateMonthET.getText().toString();
-        String dateDayString = dateDayET.getText().toString();
-        String dateHourString = timeHourET.getText().toString();
-        String dateMinuteString = timeMinuteET.getText().toString();
-        int year = Integer.parseInt(dateYearString);
-        int month = Integer.parseInt(dateMonthString) - 1;
-        int day = Integer.parseInt(dateDayString);
-        int hour = Integer.parseInt(dateHourString);
-        int minute = Integer.parseInt(dateMinuteString);
         try {
+            int year = getEditTextInt(R.id.editDateYear);
+            int month = getEditTextInt(R.id.editDateMonth)-1;
+            int day = getEditTextInt(R.id.editDateDay);
+            int hour = getEditTextInt(R.id.editTimeHour);
+            int minute = getEditTextInt(R.id.editTimeMinute);
             return new GregorianCalendar(year, month, day, hour, minute);
-        } catch (IllegalArgumentException e) {
+        } catch (NumberFormatException | NullPointerException e) {
+            Log.d(TAG, "Exception in getStartTime");
             invalidInputAlertDialog("Invalid input", "Please input a valid start date and time.");
             throw new NullPointerException("Invalid start date time");
+        }
+    }
+
+    private int getEditTextInt(int id) {
+        EditText etf = (EditText) findViewById(id);
+        String etfString = etf.getText().toString();
+        if (etfString != null) {
+            if (etfString.length() > 0) {
+                return Integer.parseInt(etfString);
+            }
+            else {
+                Log.d(TAG, "getEditTextInt with length == 0");
+                throw new NumberFormatException("Length == 0");
+            }
+        }
+        else {
+            Log.d(TAG, "getEditTextInt with no input");
+            throw new NullPointerException("EditText field is empty");
         }
     }
 
@@ -189,12 +212,16 @@ public class NewRecordActivity extends ActionBarActivity {
         String distanceString = distanceET.getText().toString();
         try {
             double distance = Double.parseDouble(distanceString);
-            if (distance < 0) {
+            if (distance <= 0) {
+                Log.d(TAG, "Distance <= 0");
                 invalidInputAlertDialog("Invalid input", "Please input a valid distance.");
                 throw new NumberFormatException("Invalid distance");
             }
-            return distance;
+            else {
+                return distance;
+            }
         } catch (NumberFormatException e) {
+            Log.d(TAG, "Distance number format exception");
             invalidInputAlertDialog("Invalid input", "Please input a valid distance.");
             throw new NumberFormatException("Invalid distance: " + e.toString());
         }

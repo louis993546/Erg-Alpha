@@ -17,3 +17,4 @@ public final class HistoryContract {
         public static final String COLUMN_NAME_RATING = "rating";
     }
 }
+
