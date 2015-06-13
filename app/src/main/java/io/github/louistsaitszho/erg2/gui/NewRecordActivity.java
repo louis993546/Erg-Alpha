@@ -88,6 +88,7 @@ public class NewRecordActivity extends ActionBarActivity {
             int duration = getDuration();
             double distance = getDistance();
             GregorianCalendar startTime = getStartTime();
+            Log.d(TAG, startTime.toString());
             int rating = getRating();
             return new Record(startTime, duration, rating, distance);
         } catch (NullPointerException | NumberFormatException e) {
@@ -176,6 +177,7 @@ public class NewRecordActivity extends ActionBarActivity {
             int day = getEditTextInt(R.id.editDateDay);
             int hour = getEditTextInt(R.id.editTimeHour);
             int minute = getEditTextInt(R.id.editTimeMinute);
+            Log.d(TAG, "" + year + month + day + hour + minute);
             return new GregorianCalendar(year, month, day, hour, minute);
         } catch (NumberFormatException | NullPointerException e) {
             Log.d(TAG, "Exception in getStartTime");

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.ViewOutlineProvider;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import io.github.louistsaitszho.erg2.R;
 import io.github.louistsaitszho.erg2.storage.HistoryDb;
@@ -22,6 +24,7 @@ import io.github.louistsaitszho.erg2.unit.Record;
 
 public class HistoryActivity extends ActionBarActivity {
 
+    public static final String TAG = HistoryActivity.class.getName();
     private HistoryDb hdb;
     private RecyclerView rv;
     private RecyclerView.Adapter rvAdapter;
@@ -90,12 +93,15 @@ public class HistoryActivity extends ActionBarActivity {
                 for (int j = 1; j < columnCount; j++) {
                     incomingSAL.add(c.getString(j));
                 }
+                Log.d(TAG, incomingSAL.get(0));
                 Record tempRecord = new Record(incomingSAL.get(0), Integer.parseInt(incomingSAL.get(2)), Integer.parseInt(incomingSAL.get(3)), Double.parseDouble(incomingSAL.get(1)));
+                Log.d(TAG, tempRecord.startTimeToString(R.integer.START_DATETIME_STRING_EXACT));
                 ral.add(tempRecord);
             }
             while (c.moveToNext());
         }
         //TODO can we sort them here?
+        Collections.sort(ral, Record.StartTimeComparator);
         return ral;
     }
 

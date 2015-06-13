@@ -13,6 +13,7 @@ import io.github.louistsaitszho.erg2.R;
  * Each records stores the total distance and duration only.
  */
 public class Record {
+    public static final String TAG = Record.class.getName();
     public static final int METER_PER_SECOND = 1;
     public static final int KM_PER_HOUR = 2;
     public static final int SECOND_TO_MILLISECOND = 1000;
@@ -22,10 +23,34 @@ public class Record {
     private static final int DEFAULT_RATING = 18;
     private static final int DEFAULT_DURATION = 1800000;
     public GregorianCalendar startTime;    //start date time
+    public static Comparator<Record> StartTimeComparator = new Comparator<Record>() {
+        @Override
+        public int compare(Record lhs, Record rhs) {
+            GregorianCalendar gc1 = lhs.getStartTime();
+            GregorianCalendar gc2 = rhs.getStartTime();
+            return gc1.compareTo(gc2);
+        }
+    };
     private double distance; //in meter
+    public static Comparator<Record> DistanceComparator = new Comparator<Record>() {
+        @Override
+        public int compare(Record lhs, Record rhs) {
+            Double d1 = lhs.getDistance();
+            Double d2 = rhs.getDistance();
+            return d1.compareTo(d2);
+        }
+    };
+    // Maybe attachment?
     private int rating;
     private int duration;   //in millisecond
-    // Maybe attachment?
+    public static Comparator<Record> DurationComparator = new Comparator<Record>() {
+        @Override
+        public int compare(Record lhs, Record rhs) {
+            Integer d1 = lhs.getDuration();
+            Integer d2 = rhs.getDuration();
+            return d1.compareTo(d2);
+        }
+    };
 
     /**
      * This is the default constructor of Record class. It create an instance of Record of 7000m
@@ -65,6 +90,7 @@ public class Record {
      */
     public Record(String startTime, int duration, int rating, double distance) {
         this();
+        Log.d(TAG, startTime);
         setStartTime(StringToGC(startTime));
         setDuration(duration);
         setRating(rating);
@@ -146,7 +172,7 @@ public class Record {
             case R.integer.START_DATETIME_STRING_EXACT: //For display(the exact time)
                 output.append(gc.get(Calendar.YEAR));
                 output.append("/");
-                output.append(gc.get(Calendar.MONTH));
+                output.append(gc.get(Calendar.MONTH)+1);
                 output.append("/");
                 output.append(gc.get(Calendar.DAY_OF_MONTH));
                 output.append(" ");
@@ -171,10 +197,8 @@ public class Record {
      */
     private GregorianCalendar StringToGC(String s) {
         ArrayList<Integer> values = new ArrayList<>();
-        Log.d("StringToGC", s);
         try {
             for (String value : s.split("/", 5)) {
-                Log.d("Value", value);
                 values.add(Integer.parseInt(value));
             }
             return new GregorianCalendar(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4));
@@ -195,32 +219,5 @@ public class Record {
     public int per500() {
         double a = getDistance() / 500;
         return (int) (getDuration() / a);
-    }
-
-    class StartTimeCompare implements Comparator<Record> {
-        @Override
-        public int compare(Record lhs, Record rhs) {
-            GregorianCalendar gc1 = lhs.getStartTime();
-            GregorianCalendar gc2 = rhs.getStartTime();
-            return gc1.compareTo(gc2);
-        }
-    }
-
-    class DistanceCompare implements Comparator<Record> {
-        @Override
-        public int compare(Record lhs, Record rhs) {
-            Double d1 = lhs.getDistance();
-            Double d2 = rhs.getDistance();
-            return d1.compareTo(d2);
-        }
-    }
-
-    class DurationCompare implements Comparator<Record> {
-        @Override
-        public int compare(Record lhs, Record rhs) {
-            Integer d1 = lhs.getDuration();
-            Integer d2 = rhs.getDuration();
-            return d1.compareTo(d2);
-        }
     }
 }
