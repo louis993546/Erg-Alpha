@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="START_DATETIME_STRING_STORAGE">1</integer>
+    <integer name="START_DATETIME_STRING_EXACT">2</integer>
+    <integer name="START_DATETIME_STRING_DIFFERENCE">3</integer>
+</resources>

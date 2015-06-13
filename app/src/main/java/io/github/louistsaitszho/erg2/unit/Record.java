@@ -4,7 +4,10 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
+
+import io.github.louistsaitszho.erg2.R;
 
 /**
  * Each records stores the total distance and duration only.
@@ -128,27 +131,35 @@ public class Record {
      */
     private String GCToString(GregorianCalendar gc, int style) {
         StringBuilder output = new StringBuilder();
-
-        output.append(gc.get(Calendar.YEAR));
-        output.append("/");
-        output.append(gc.get(Calendar.MONTH));
-        output.append("/");
-        output.append(gc.get(Calendar.DAY_OF_MONTH));
-        if (style == 1) //For storage
-        {
-            output.append("/");
-            output.append(gc.get(Calendar.HOUR_OF_DAY));
-            output.append("/");
-            output.append(gc.get(Calendar.MINUTE));
-        } else //for display
-        {
-            output.append(" ");
-            output.append(gc.get(Calendar.HOUR_OF_DAY));
-            output.append(":");
-            output.append(gc.get(Calendar.MINUTE));
+        switch (style) {
+            case R.integer.START_DATETIME_STRING_STORAGE: //For storage
+                output.append(gc.get(Calendar.YEAR));
+                output.append("/");
+                output.append(gc.get(Calendar.MONTH));
+                output.append("/");
+                output.append(gc.get(Calendar.DAY_OF_MONTH));
+                output.append("/");
+                output.append(gc.get(Calendar.HOUR_OF_DAY));
+                output.append("/");
+                output.append(gc.get(Calendar.MINUTE));
+                break;
+            case R.integer.START_DATETIME_STRING_EXACT: //For display(the exact time)
+                output.append(gc.get(Calendar.YEAR));
+                output.append("/");
+                output.append(gc.get(Calendar.MONTH));
+                output.append("/");
+                output.append(gc.get(Calendar.DAY_OF_MONTH));
+                output.append(" ");
+                output.append(gc.get(Calendar.HOUR_OF_DAY));
+                output.append(":");
+                output.append(gc.get(Calendar.MINUTE));
+                break;
+            case R.integer.START_DATETIME_STRING_DIFFERENCE: //For display(how old)
+                //TODO calculate how long ago
+                //get current date time
+                //range: today >> ? day(s) >> ? week(s) >> ? month(s) >> ? year(s)
+                break;
         }
-
-
         return output.toString();
     }
 
@@ -186,4 +197,30 @@ public class Record {
         return (int) (getDuration() / a);
     }
 
+    class StartTimeCompare implements Comparator<Record> {
+        @Override
+        public int compare(Record lhs, Record rhs) {
+            GregorianCalendar gc1 = lhs.getStartTime();
+            GregorianCalendar gc2 = rhs.getStartTime();
+            return gc1.compareTo(gc2);
+        }
+    }
+
+    class DistanceCompare implements Comparator<Record> {
+        @Override
+        public int compare(Record lhs, Record rhs) {
+            Double d1 = lhs.getDistance();
+            Double d2 = rhs.getDistance();
+            return d1.compareTo(d2);
+        }
+    }
+
+    class DurationCompare implements Comparator<Record> {
+        @Override
+        public int compare(Record lhs, Record rhs) {
+            Integer d1 = lhs.getDuration();
+            Integer d2 = rhs.getDuration();
+            return d1.compareTo(d2);
+        }
+    }
 }

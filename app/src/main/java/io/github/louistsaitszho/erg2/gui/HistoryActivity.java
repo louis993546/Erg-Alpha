@@ -95,6 +95,7 @@ public class HistoryActivity extends ActionBarActivity {
             }
             while (c.moveToNext());
         }
+        //TODO can we sort them here?
         return ral;
     }
 
@@ -107,6 +108,7 @@ public class HistoryActivity extends ActionBarActivity {
         rv.setLayoutManager(llm);
         rvAdapter = new HistoryAdapter(ral);
         rv.setAdapter(rvAdapter);
+
         ViewOutlineProvider vop = new ViewOutlineProvider() {
             @Override
             public void getOutline(View view, Outline outline) {

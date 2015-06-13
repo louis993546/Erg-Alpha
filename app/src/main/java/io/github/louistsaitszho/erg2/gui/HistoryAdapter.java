@@ -90,6 +90,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     public String startDateTimeToString(Record r) {
+        //TODO get how long ago instead of when exactly
         return r.startTimeToString(2);
     }
 
