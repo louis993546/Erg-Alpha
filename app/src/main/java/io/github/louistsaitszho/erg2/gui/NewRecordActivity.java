@@ -176,8 +176,9 @@ public class NewRecordActivity extends ActionBarActivity {
             int month = getEditTextInt(R.id.editDateMonth)-1;
             int day = getEditTextInt(R.id.editDateDay);
             int hour = getEditTextInt(R.id.editTimeHour);
+            Log.d(TAG, "hour = "+hour);
             int minute = getEditTextInt(R.id.editTimeMinute);
-            Log.d(TAG, "" + year + month + day + hour + minute);
+            Log.d(TAG, "The start time I just got = " + year + month + day + hour + minute);
             return new GregorianCalendar(year, month, day, hour, minute);
         } catch (NumberFormatException | NullPointerException e) {
             Log.d(TAG, "Exception in getStartTime");

@@ -1,6 +1,7 @@
 package io.github.louistsaitszho.erg2.gui;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,23 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         minute = ms / MINUTE_TO_MS;
         ms = ms % MINUTE_TO_MS;
         second = ms / SECOND_TO_MS;
-        output.append(hour).append(":").append(minute).append(":").append(second);
+        ms = (ms % SECOND_TO_MS)/100;
+        if (hour != 0) {
+            output.append(hour).append(":");
+        }
+        String minuteString;
+        if (minute < 10) {
+            minuteString = "0" + minute;
+        } else {
+            minuteString = "" + minute;
+        }
+        String secondString;
+        if (second < 10) {
+            secondString = "0" + second;
+        } else {
+          secondString = "" + second;
+        }
+        output.append(minuteString).append(":").append(secondString).append(".").append(ms);
         return output.toString();
     }
 
@@ -92,7 +109,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public String startDateTimeToString(Record r) {
         //TODO get how long ago instead of when exactly
-        return r.startTimeToString(R.integer.START_DATETIME_STRING_EXACT);
+//        return r.startTimeToString(R.integer.START_DATETIME_STRING_EXACT);
+        Log.d(TAG, "Text to be display: " + r.startTimeToString(R.integer.START_DATETIME_STRING_DIFFERENCE));
+        return r.startTimeToString(R.integer.START_DATETIME_STRING_DIFFERENCE);
     }
 
     public static class ViewHolder2 extends RecyclerView.ViewHolder {

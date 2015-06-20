@@ -101,7 +101,7 @@ public class HistoryActivity extends ActionBarActivity {
             while (c.moveToNext());
         }
         //TODO can we sort them here?
-        Collections.sort(ral, Record.StartTimeComparator);
+        Collections.sort(ral, Record.StartTimeComparatorDESC);
         return ral;
     }
 

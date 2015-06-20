@@ -1,10 +1,12 @@
 package io.github.louistsaitszho.erg2.unit;
 
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import io.github.louistsaitszho.erg2.R;
@@ -23,7 +25,17 @@ public class Record {
     private static final int DEFAULT_RATING = 18;
     private static final int DEFAULT_DURATION = 1800000;
     public GregorianCalendar startTime;    //start date time
-    public static Comparator<Record> StartTimeComparator = new Comparator<Record>() {
+
+    public static Comparator<Record> StartTimeComparatorDESC = new Comparator<Record>() {
+        @Override
+        public int compare(Record lhs, Record rhs) {
+            GregorianCalendar gc1 = lhs.getStartTime();
+            GregorianCalendar gc2 = rhs.getStartTime();
+            return gc2.compareTo(gc1);
+        }
+    };
+
+    public static Comparator<Record> StartTimeComparatorASCE = new Comparator<Record>() {
         @Override
         public int compare(Record lhs, Record rhs) {
             GregorianCalendar gc1 = lhs.getStartTime();
@@ -182,10 +194,15 @@ public class Record {
                 break;
             case R.integer.START_DATETIME_STRING_DIFFERENCE: //For display(how old)
                 //TODO calculate how long ago
-                //get current date time
-                //range: today >> ? day(s) >> ? week(s) >> ? month(s) >> ? year(s)
+                Date recordDate = gc.getTime();
+                CharSequence howLongAgoCS = DateUtils.getRelativeTimeSpanString(recordDate.getTime(), System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
+                Log.d(TAG, "Current time in ms = " + System.currentTimeMillis());
+                Log.d(TAG, "gc in ms = " + recordDate.getTime());
+//                Log.d(TAG, howLongAgoCS.toString());
+                output.append(howLongAgoCS.toString());
                 break;
         }
+        Log.d(TAG, "Start date time to be display: " + output.toString());
         return output.toString();
     }
 
