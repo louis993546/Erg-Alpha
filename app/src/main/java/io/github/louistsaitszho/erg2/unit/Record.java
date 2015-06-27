@@ -24,7 +24,6 @@ public class Record {
     private static final int DEFAULT_RATING = 18;
     private static final int DEFAULT_DURATION = 1800000;
     public GregorianCalendar startTime;    //start date time
-
     public static Comparator<Record> StartTimeComparatorDESC = new Comparator<Record>() {
         @Override
         public int compare(Record lhs, Record rhs) {
@@ -33,7 +32,6 @@ public class Record {
             return gc2.compareTo(gc1);
         }
     };
-
     public static Comparator<Record> StartTimeComparatorASCE = new Comparator<Record>() {
         @Override
         public int compare(Record lhs, Record rhs) {
@@ -42,8 +40,17 @@ public class Record {
             return gc1.compareTo(gc2);
         }
     };
+    // Maybe attachment?
     private double distance; //in meter
-    public static Comparator<Record> DistanceComparator = new Comparator<Record>() {
+    public static Comparator<Record> DistanceComparatorDESC = new Comparator<Record>() {
+        @Override
+        public int compare(Record lhs, Record rhs) {
+            Double d1 = lhs.getDistance();
+            Double d2 = rhs.getDistance();
+            return d2.compareTo(d1);
+        }
+    };
+    public static Comparator<Record> DistanceComparatorASEC = new Comparator<Record>() {
         @Override
         public int compare(Record lhs, Record rhs) {
             Double d1 = lhs.getDistance();
@@ -51,10 +58,18 @@ public class Record {
             return d1.compareTo(d2);
         }
     };
-    // Maybe attachment?
     private int rating;
     private int duration;   //in millisecond
-    public static Comparator<Record> DurationComparator = new Comparator<Record>() {
+    public static Comparator<Record> DurationComparatorDESC = new Comparator<Record>() {
+        @Override
+        public int compare(Record lhs, Record rhs) {
+            Integer d1 = lhs.getDuration();
+            Integer d2 = rhs.getDuration();
+            return d2.compareTo(d1);
+        }
+    };
+
+    public static Comparator<Record> DurationComparatorASEC = new Comparator<Record>() {
         @Override
         public int compare(Record lhs, Record rhs) {
             Integer d1 = lhs.getDuration();
@@ -69,7 +84,6 @@ public class Record {
      */
     public Record() {
         startTime = new GregorianCalendar();     //current time
-//        startTime.setTime(new Date());
         distance = DEFAULT_DISTANCE;            //7000m
         rating = DEFAULT_RATING;                //rating 18
         duration = DEFAULT_DURATION;            //30 minutes

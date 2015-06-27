@@ -1,4 +1,4 @@
-package io.github.louistsaitszho.erg2.gui;
+package io.github.louistsaitszho.erg2.gui.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

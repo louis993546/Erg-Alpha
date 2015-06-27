@@ -1,5 +1,6 @@
-package io.github.louistsaitszho.erg2.gui;
+package io.github.louistsaitszho.erg2.gui.activity;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Outline;
@@ -19,6 +20,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import io.github.louistsaitszho.erg2.R;
+import io.github.louistsaitszho.erg2.gui.HistoryAdapter;
+import io.github.louistsaitszho.erg2.gui.dialog.SortingDialog;
 import io.github.louistsaitszho.erg2.storage.HistoryDb;
 import io.github.louistsaitszho.erg2.unit.Record;
 
@@ -75,7 +78,14 @@ public class HistoryActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        switch (id) {
+            case R.id.SortingAction:
+                DialogFragment sd = new SortingDialog(sortingMode);
+                sd.show(getFragmentManager(), "Sorting Mode");
+                break;
+            default:
+                return true;
+        }
         //noinspection SimplifiableIfStatement
 //        if (id == R.id.action_settings) {
 //            return true;
@@ -95,14 +105,12 @@ public class HistoryActivity extends ActionBarActivity {
                 for (int j = 1; j < columnCount; j++) {
                     incomingSAL.add(c.getString(j));
                 }
-                Log.d(TAG, incomingSAL.get(0));
                 Record tempRecord = new Record(incomingSAL.get(0), Integer.parseInt(incomingSAL.get(2)), Integer.parseInt(incomingSAL.get(3)), Double.parseDouble(incomingSAL.get(1)));
-                Log.d(TAG, tempRecord.startTimeToString(R.integer.START_DATETIME_STRING_EXACT));
+                Log.d(TAG, "temp Record: " + tempRecord);
                 ral.add(tempRecord);
             }
             while (c.moveToNext());
         }
-        //TODO can we sort them here?
         Collections.sort(ral, sortingMode);
         return ral;
     }
@@ -127,11 +135,16 @@ public class HistoryActivity extends ActionBarActivity {
         findViewById(R.id.fab).setOutlineProvider(vop);
     }
 
-
-
     public void addNewRecordActivity(View view) {
         Intent intent = new Intent(this, NewRecordActivity.class);
         startActivity(intent);
     }
 
+    public Comparator<Record> getSortingMode() {
+        return sortingMode;
+    }
+
+    public void setSortingMode(Comparator<Record> newSM) {
+        sortingMode = newSM;
+    }
 }
