@@ -1,4 +1,4 @@
-package io.github.louistsaitszho.erg2.gui;
+package io.github.louistsaitszho.erg2.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,6 +43,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card, viewGroup, false);
         return new ViewHolder2(itemView);
     }
+
 
     @Override
     public int getItemCount() {

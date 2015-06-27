@@ -1,7 +1,5 @@
 package io.github.louistsaitszho.erg2.utils;
 
-import java.util.Date;
-
 /**
  * Created by Louis on 6/27/2015.
  */
@@ -14,10 +12,6 @@ public class TimeAgo {
     public final static long WEEK = 7 * DAY;
     public final static long MONTH = (int) (30.4375 * DAY);
     public final static long YEAR = (int) (365.25 * DAY);
-
-    public static String toTimeAgo(Date dateDiff) {
-        return toTimeAgo(dateDiff.getTime());
-    }
 
     public static String toTimeAgo(long dateMsDiff) {
         if (dateMsDiff < MINUTE)

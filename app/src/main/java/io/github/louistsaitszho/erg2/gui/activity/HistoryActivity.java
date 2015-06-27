@@ -20,8 +20,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import io.github.louistsaitszho.erg2.R;
-import io.github.louistsaitszho.erg2.gui.HistoryAdapter;
+import io.github.louistsaitszho.erg2.adapter.HistoryAdapter;
 import io.github.louistsaitszho.erg2.gui.dialog.SortingDialog;
+import io.github.louistsaitszho.erg2.listener.cardClickListener;
 import io.github.louistsaitszho.erg2.storage.HistoryDb;
 import io.github.louistsaitszho.erg2.unit.Record;
 
@@ -51,6 +52,15 @@ public class HistoryActivity extends ActionBarActivity {
             }
         };
         findViewById(R.id.fab).setOutlineProvider(vop);
+        RecyclerView historyRv = (RecyclerView) findViewById(R.id.HistoryRV);
+        historyRv.addOnItemTouchListener(new cardClickListener(this, new cardClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Log.d(TAG, "position of item click: " + position);
+                Log.d(TAG, ral.get(position).toString());
+                recordActivity(view);
+            }
+        }));
     }
 
     @Override
@@ -135,8 +145,13 @@ public class HistoryActivity extends ActionBarActivity {
         findViewById(R.id.fab).setOutlineProvider(vop);
     }
 
-    public void addNewRecordActivity(View view) {
+    public void newRecordActivity(View view) {
         Intent intent = new Intent(this, NewRecordActivity.class);
+        startActivity(intent);
+    }
+
+    public void recordActivity(View view) {
+        Intent intent = new Intent(this, RecordActivity.class);
         startActivity(intent);
     }
 
