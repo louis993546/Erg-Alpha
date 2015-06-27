@@ -80,7 +80,7 @@ public class HistoryActivity extends ActionBarActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.SortingAction:
-                DialogFragment sd = new SortingDialog(sortingMode);
+                DialogFragment sd = new SortingDialog();
                 sd.show(getFragmentManager(), "Sorting Mode");
                 break;
             default:

@@ -23,13 +23,10 @@ public class SortingDialog extends DialogFragment {
     public SortingDialog() {
     }
 
-    public SortingDialog(Comparator<Record> oldSM) {
-        sortingMode = oldSM;
-    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        sortingMode = ((HistoryActivity) getActivity()).getSortingMode();
         builder.setTitle(R.string.dialog_which_sorting_mode)
                 .setItems(R.array.sorting_array, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
