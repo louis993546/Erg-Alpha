@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import io.github.louistsaitszho.erg2.R;
 import io.github.louistsaitszho.erg2.storage.HistoryDb;
@@ -30,6 +31,7 @@ public class HistoryActivity extends ActionBarActivity {
     private RecyclerView.Adapter rvAdapter;
     private RecyclerView.LayoutManager rvLM;
     private ArrayList<Record> ral;
+    private Comparator<Record> sortingMode = Record.StartTimeComparatorDESC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +103,7 @@ public class HistoryActivity extends ActionBarActivity {
             while (c.moveToNext());
         }
         //TODO can we sort them here?
-        Collections.sort(ral, Record.StartTimeComparatorDESC);
+        Collections.sort(ral, sortingMode);
         return ral;
     }
 

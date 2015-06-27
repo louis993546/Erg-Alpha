@@ -1,15 +1,14 @@
 package io.github.louistsaitszho.erg2.unit;
 
-import android.text.format.DateUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import io.github.louistsaitszho.erg2.R;
+import io.github.louistsaitszho.erg2.utils.TimeAgo;
 
 /**
  * Each records stores the total distance and duration only.
@@ -192,14 +191,8 @@ public class Record {
                 output.append(":");
                 output.append(gc.get(Calendar.MINUTE));
                 break;
-            case R.integer.START_DATETIME_STRING_DIFFERENCE: //For display(how old)
-                //TODO calculate how long ago
-                Date recordDate = gc.getTime();
-                CharSequence howLongAgoCS = DateUtils.getRelativeTimeSpanString(recordDate.getTime(), System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
-                Log.d(TAG, "Current time in ms = " + System.currentTimeMillis());
-                Log.d(TAG, "gc in ms = " + recordDate.getTime());
-//                Log.d(TAG, howLongAgoCS.toString());
-                output.append(howLongAgoCS.toString());
+            case R.integer.START_DATETIME_STRING_DIFFERENCE: //For display(time ago)
+                output.append(TimeAgo.toTimeAgo(System.currentTimeMillis() - gc.getTimeInMillis()));
                 break;
         }
         Log.d(TAG, "Start date time to be display: " + output.toString());
