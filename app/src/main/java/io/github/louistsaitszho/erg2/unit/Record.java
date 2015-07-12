@@ -18,15 +18,20 @@ import io.github.louistsaitszho.erg2.utils.TimeAgo;
  */
 public class Record implements Serializable {
     public static final String TAG = Record.class.getName();
+
     public static final int METER_PER_SECOND = 1;
     public static final int KM_PER_HOUR = 2;
+
     public static final int SECOND_TO_MILLISECOND = 1000;
     public static final int MINUTE_TO_SECOND = 60;
     public static final int HOUR_TO_SECOND = 3600;
+
     private static final double DEFAULT_DISTANCE = 7000;
     private static final int DEFAULT_RATING = 18;
     private static final int DEFAULT_DURATION = 1800000;
-    public GregorianCalendar startTime;    //start date time
+
+    private int id;
+    private GregorianCalendar startTime;    //start date time
     public static Comparator<Record> StartTimeComparatorDESC = new Comparator<Record>() {
         @Override
         public int compare(Record lhs, Record rhs) {
@@ -125,6 +130,14 @@ public class Record implements Serializable {
         setDistance(distance);
     }
 
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
     public GregorianCalendar getStartTime() {
         return startTime;
     }
@@ -217,7 +230,11 @@ public class Record implements Serializable {
                 output.append(" ");
                 output.append(gc.get(Calendar.HOUR_OF_DAY));
                 output.append(":");
-                output.append(gc.get(Calendar.MINUTE));
+                int min = gc.get(Calendar.MINUTE);
+                if (min >= 10)
+                    output.append(min);
+                else
+                    output.append("0").append(min);
                 break;
             case Consts.START_DATETIME_STRING_DIFFERENCE: //For display(time ago)
                 output.append(TimeAgo.toTimeAgo(System.currentTimeMillis() - gc.getTimeInMillis()));

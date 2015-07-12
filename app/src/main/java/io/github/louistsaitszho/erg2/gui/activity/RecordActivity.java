@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import io.github.louistsaitszho.erg2.R;
+import io.github.louistsaitszho.erg2.storage.HistoryDb;
 import io.github.louistsaitszho.erg2.unit.Record;
 import io.github.louistsaitszho.erg2.utils.Consts;
 
@@ -63,10 +64,11 @@ public class RecordActivity extends ActionBarActivity {
     int id = item.getItemId();
 
     //noinspection SimplifiableIfStatement
-//    if (id == R.id.action_settings) {
-//      return true;
-//    }
-
+    if (id == R.id.delete_button) {
+      HistoryDb hdb = new HistoryDb(this);
+      hdb.removeRecord(theRecord.getID());
+    }
+    finish();
     return super.onOptionsItemSelected(item);
   }
 }

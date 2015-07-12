@@ -2,13 +2,11 @@ package io.github.louistsaitszho.erg2.gui.activity;
 
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Outline;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 import io.github.louistsaitszho.erg2.R;
@@ -104,29 +101,8 @@ public class HistoryActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public ArrayList<Record> getRecords() {
-        Cursor c = hdb.selectRecord();
-        int count = c.getCount();
-        int columnCount = c.getColumnCount();
-        ArrayList<Record> ral = new ArrayList<>();
-        if (count > 0) {
-            do {
-                ArrayList<String> incomingSAL = new ArrayList<>();
-                for (int j = 1; j < columnCount; j++) {
-                    incomingSAL.add(c.getString(j));
-                }
-                Record tempRecord = new Record(incomingSAL.get(0), Integer.parseInt(incomingSAL.get(2)), Integer.parseInt(incomingSAL.get(3)), Double.parseDouble(incomingSAL.get(1)));
-                Log.d(TAG, "temp Record: " + tempRecord);
-                ral.add(tempRecord);
-            }
-            while (c.moveToNext());
-        }
-        Collections.sort(ral, sortingMode);
-        return ral;
-    }
-
     public void updateView() {
-        ral = getRecords();
+        ral = hdb.getRecords(sortingMode);
         rv = (RecyclerView) findViewById(R.id.HistoryRV);
         rv.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
