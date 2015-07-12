@@ -201,7 +201,7 @@
             android:id="@+id/textRating"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="Rating" />
+            android:text="@string/rating" />
 
         <EditText
             android:id="@+id/editRating"

@@ -8,130 +8,126 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context="io.github.louistsaitszho.erg2.gui.activity.RecordActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/startDateTimeRL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/start_datetime" />
+
+            <TextView
+                android:id="@+id/startDateTimeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/durationRL"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/startDateLL"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignParentStart="true"
+                android:text="@string/duration" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/start_date" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/startTimeLL"
+            <TextView
+                android:id="@+id/durationTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="right" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:id="@+id/distanceRL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/durationLL"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignParentStart="true"
+                android:text="@string/distance" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/distanceLL"
+            <TextView
+                android:id="@+id/distanceTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignParentEnd="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:id="@+id/ratingRL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ratingLL"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignParentStart="true"
+                android:text="@string/rating" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/speedLL"
+            <TextView
+                android:id="@+id/ratingTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignParentEnd="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:id="@+id/speedRL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/per500LL"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignParentStart="true"
+                android:text="@string/speed" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/speedTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+        </RelativeLayout>
 
-            </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/per500RL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/per500m" />
 
-    </ScrollView>
+            <TextView
+                android:id="@+id/per500mTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

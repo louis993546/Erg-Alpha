@@ -4,15 +4,45 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import io.github.louistsaitszho.erg2.R;
+import io.github.louistsaitszho.erg2.unit.Record;
 
 public class RecordActivity extends ActionBarActivity {
+  public final static String TAG = RecordActivity.class.getName();
+
+  private Record theRecord;
+
+  private TextView tvStartDateTime;
+  private TextView tvDuration;
+  private TextView tvDistance;
+  private TextView tvRating;
+  private TextView tvSpeed;
+  private TextView tvPer500m;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_record);
+    Gson gson = new Gson();
+    theRecord = gson.fromJson(getIntent().getStringExtra("theRecord"), Record.class);
+
+    tvStartDateTime = (TextView) findViewById(R.id.startDateTimeTV);
+    tvDuration = (TextView) findViewById(R.id.durationTV);
+    tvDistance = (TextView) findViewById(R.id.distanceTV);
+    tvRating = (TextView) findViewById(R.id.ratingTV);
+    tvSpeed = (TextView) findViewById(R.id.speedTV);
+    tvPer500m = (TextView) findViewById(R.id.per500mTV);
+
+    tvStartDateTime.setText(theRecord.getStartTimeString(R.integer.START_DATETIME_STRING_EXACT));
+    tvDuration.setText(theRecord.getDurationString());
+    tvDistance.setText(theRecord.getDistanceString());
+    tvRating.setText(theRecord.getRatingString());
+    tvPer500m.setText(theRecord.getPer500mString());
+
   }
 
   @Override

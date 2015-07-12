@@ -1,7 +1,6 @@
 package io.github.louistsaitszho.erg2.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,10 +108,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     public String startDateTimeToString(Record r) {
-        //TODO get how long ago instead of when exactly
-//        return r.startTimeToString(R.integer.START_DATETIME_STRING_EXACT);
-        Log.d(TAG, "Text to be display: " + r.startTimeToString(R.integer.START_DATETIME_STRING_DIFFERENCE));
-        return r.startTimeToString(R.integer.START_DATETIME_STRING_DIFFERENCE);
+        return r.getStartTimeString(R.integer.START_DATETIME_STRING_DIFFERENCE);
     }
 
     public static class ViewHolder2 extends RecyclerView.ViewHolder {

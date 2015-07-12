@@ -2,6 +2,7 @@ package io.github.louistsaitszho.erg2.unit;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -13,7 +14,7 @@ import io.github.louistsaitszho.erg2.utils.TimeAgo;
 /**
  * Each records stores the total distance and duration only.
  */
-public class Record {
+public class Record implements Serializable {
     public static final String TAG = Record.class.getName();
     public static final int METER_PER_SECOND = 1;
     public static final int KM_PER_HOUR = 2;
@@ -236,8 +237,70 @@ public class Record {
      * This method return the startTime in string form
      * @return startTime in string form
      */
-    public String startTimeToString(int style) {
+    public String getStartTimeString(int style) {
         return GCToString(getStartTime(), style);
+    }
+
+    public String getDistanceString() {
+        return (distance + "m");
+    }
+
+    public String getDurationString() {
+        int hour;
+        int minute;
+        int second;
+        int ms = duration;
+        StringBuilder output = new StringBuilder();
+        hour = ms / (R.integer.HOW_MANY_MIN_IN_HOUR * R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
+        ms /= (R.integer.HOW_MANY_MIN_IN_HOUR * R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
+        minute = ms / (R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
+        ms %= (R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
+        second = ms / R.integer.HOW_MANY_MS_IN_S;
+        ms = (ms % R.integer.HOW_MANY_MS_IN_S) / 100;
+        if (hour != 0) {
+            output.append(hour).append(":");
+        }
+        String minuteString;
+        if (minute < 10) {
+            minuteString = "0" + minute;
+        } else {
+            minuteString = "" + minute;
+        }
+        String secondString;
+        if (second < 10) {
+            secondString = "0" + second;
+        } else {
+            secondString = "" + second;
+        }
+        output.append(minuteString).append(":").append(secondString).append(".").append(ms);
+        return output.toString();
+    }
+
+//    public String getSpeedString() {}
+
+    public String getRatingString() {
+        return (rating + " s/min");
+    }
+
+    public String getPer500mString() {
+        int minute;
+        int second;
+        StringBuilder secondString = new StringBuilder();
+        int millisecond;
+        int ms = per500();
+        StringBuilder output = new StringBuilder();
+        minute = ms / (R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
+        ms = ms % (R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
+        second = ms / R.integer.HOW_MANY_MS_IN_S;
+        if (second < 10) {
+            secondString.append("0").append(second);
+        } else {
+            secondString.append(second);
+        }
+        ms = ms % R.integer.HOW_MANY_MS_IN_S;
+        millisecond = ms / 100;
+        output.append(minute).append(":").append(secondString).append(".").append(millisecond);    //DO NOT PUT UNIT HERE
+        return output.toString();
     }
 
     public int per500() {

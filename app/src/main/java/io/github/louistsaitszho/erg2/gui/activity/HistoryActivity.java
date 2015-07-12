@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -56,9 +58,7 @@ public class HistoryActivity extends ActionBarActivity {
         historyRv.addOnItemTouchListener(new cardClickListener(this, new cardClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Log.d(TAG, "position of item click: " + position);
-                Log.d(TAG, ral.get(position).toString());
-                recordActivity(view);
+                recordActivity(view, position);
             }
         }));
     }
@@ -150,10 +150,16 @@ public class HistoryActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void recordActivity(View view) {
+    public void recordActivity(View view, int whichOne) {
+        Log.d(TAG, "is this working?");
         Intent intent = new Intent(this, RecordActivity.class);
+        Gson gson = new Gson();
+        String recordTBD = gson.toJson(ral.get(whichOne));
+        Log.d(TAG, "is this gson string? " + recordTBD);
+        intent.putExtra("theRecord", recordTBD);
         startActivity(intent);
     }
+
 
     public Comparator<Record> getSortingMode() {
         return sortingMode;
