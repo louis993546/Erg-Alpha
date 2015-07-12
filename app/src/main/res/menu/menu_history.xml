@@ -5,6 +5,6 @@
     <item
         android:id="@+id/SortingAction"
         android:icon="@drawable/ic_sort_white"
-        android:title="Sort by"
+        android:title="@string/sort_by"
         Erg2:showAsAction="ifRoom" />
 </menu>

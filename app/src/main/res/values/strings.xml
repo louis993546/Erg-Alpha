@@ -1,13 +1,36 @@
 <resources>
     <string name="app_name">Erg Alpha</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_new_record">New Record</string>
     <string name="title_activity_history">Erg Alpha</string>
     <string name="actual_title_activity_history">History</string>
-    <string name="dialog_which_sorting_mode">Sorting mode</string>
+    <string name="title_activity_record">View record</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
-    <string name="title_activity_record">RecordActivity</string>
+    <string name="discard">Discard</string>
+    <string name="modify">Modify</string>
+
+
+    <string name="dialog_which_sorting_mode">Sorting mode</string>
+
+    <string name="start_date">Start date</string>
+    <string name="start_time">Start Time</string>
+    <string name="duration">Duration</string>
+    <string name="distance">Distance</string>
+    <string name="rating">Rating</string>
+    <string name="speed">Speed</string>
+    <string name="per500m">/500m</string>
+
+    <string name="sort_by">Sort by</string>
+    <string name="hour">Hour</string>
+    <string name="colon">:</string>
+    <string name="minute">Minute</string>
+    <string name="second">Second</string>
+    <string name="meter">Meter</string>
+
+
 </resources>

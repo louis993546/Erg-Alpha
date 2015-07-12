@@ -6,12 +6,12 @@
     <item
         android:id="@+id/DiscardAction"
         android:icon="@drawable/ic_action_cancel"
-        android:title="Discard"
+        android:title="@string/discard"
         Erg2:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/ConfirmAction"
         android:icon="@drawable/ic_action_accept"
-        android:title="Confirm"
+        android:title="@string/confirm"
         Erg2:showAsAction="ifRoom" />
 </menu>

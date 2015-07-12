@@ -110,7 +110,7 @@ public class NewRecordActivity extends ActionBarActivity {
     }
 
     /**
-     * @return duration user have specified in interger of millisecond
+     * @return duration user have specified in integer of millisecond
      * TODO change it to some kind of date time picker
      */
     public int getDuration() {
@@ -167,7 +167,7 @@ public class NewRecordActivity extends ActionBarActivity {
      * of time based on user inputs
      * @return a instance of GregorianCalendar of user specified start date time
      * TODO something is probably wrong here
-     * TODO change it to datapicker
+     * TODO change it to datepicker
      * TODO create a lot of invalidInputAlertDialog here for null input
      */
     public GregorianCalendar getStartTime() {
@@ -190,18 +190,12 @@ public class NewRecordActivity extends ActionBarActivity {
     private int getEditTextInt(int id) {
         EditText etf = (EditText) findViewById(id);
         String etfString = etf.getText().toString();
-        if (etfString != null) {
-            if (etfString.length() > 0) {
-                return Integer.parseInt(etfString);
-            }
-            else {
-                Log.d(TAG, "getEditTextInt with length == 0");
-                throw new NumberFormatException("Length == 0");
-            }
+        if (etfString.length() > 0) {
+            return Integer.parseInt(etfString);
         }
         else {
-            Log.d(TAG, "getEditTextInt with no input");
-            throw new NullPointerException("EditText field is empty");
+            Log.d(TAG, "getEditTextInt with length == 0");
+            throw new NumberFormatException("Length == 0");
         }
     }
 

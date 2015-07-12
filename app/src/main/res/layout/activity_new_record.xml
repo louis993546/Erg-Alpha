@@ -21,7 +21,7 @@
             android:id="@+id/textDuration"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="Duration" />
+            android:text="@string/duration" />
 
         <EditText
             android:id="@+id/editDurationHour"
@@ -29,14 +29,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Hour"
+            android:hint="@string/hour"
             android:inputType="number"
             android:nextFocusDown="@+id/editDurationMinute" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=":" />
+            android:text="@string/colon" />
 
         <EditText
             android:id="@+id/editDurationMinute"
@@ -44,14 +44,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Minute"
+            android:hint="@string/minute"
             android:inputType="number"
             android:nextFocusDown="@+id/editDurationSecond" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=":" />
+            android:text="@string/colon" />
 
         <EditText
             android:id="@+id/editDurationSecond"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Second"
+            android:hint="@string/second"
             android:inputType="numberDecimal"
             android:nextFocusDown="@+id/editDistance" />
 
@@ -78,15 +78,15 @@
             android:id="@+id/textDistance"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="Distance" />
+            android:text="@string/distance" />
 
         <EditText
             android:id="@+id/editDistance"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Meter"
+            android:hint="@string/meter"
             android:inputType="numberDecimal"
             android:nextFocusDown="@+id/editDateYear" />
     </LinearLayout>
@@ -205,7 +205,7 @@
 
         <EditText
             android:id="@+id/editRating"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"

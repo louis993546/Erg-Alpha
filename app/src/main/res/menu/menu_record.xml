@@ -1,10 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:Erg2="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="io.github.louistsaitszho.erg2.gui.activity.RecordActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+        android:id="@+id/modify_button"
+        android:icon="@drawable/ic_action_edit"
+        android:title="@string/modify"
+        Erg2:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/delete_button"
+        android:icon="@drawable/ic_action_discard"
+        android:title="@string/discard"
+        Erg2:showAsAction="ifRoom" />
 </menu>
