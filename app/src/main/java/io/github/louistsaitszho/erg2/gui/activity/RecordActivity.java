@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 import io.github.louistsaitszho.erg2.R;
 import io.github.louistsaitszho.erg2.unit.Record;
+import io.github.louistsaitszho.erg2.utils.Consts;
 
 public class RecordActivity extends ActionBarActivity {
   public final static String TAG = RecordActivity.class.getName();
@@ -37,10 +38,12 @@ public class RecordActivity extends ActionBarActivity {
     tvSpeed = (TextView) findViewById(R.id.speedTV);
     tvPer500m = (TextView) findViewById(R.id.per500mTV);
 
-    tvStartDateTime.setText(theRecord.getStartTimeString(R.integer.START_DATETIME_STRING_EXACT));
+    theRecord.setContext(this);
+    tvStartDateTime.setText(theRecord.getStartTimeString(Consts.START_DATETIME_STRING_EXACT));
     tvDuration.setText(theRecord.getDurationString());
     tvDistance.setText(theRecord.getDistanceString());
     tvRating.setText(theRecord.getRatingString());
+    tvSpeed.setText(theRecord.getSpeedString());
     tvPer500m.setText(theRecord.getPer500mString());
 
   }

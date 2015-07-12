@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import io.github.louistsaitszho.erg2.R;
 import io.github.louistsaitszho.erg2.unit.Record;
+import io.github.louistsaitszho.erg2.utils.Consts;
 
 /**
  * Created by Louis on 29/5/15.
@@ -22,7 +22,7 @@ public class HistoryDb {
 
     public long addRecord(Record r) {
         ContentValues cv = new ContentValues();
-        cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_DATETIME, r.getStartTimeString(R.integer.START_DATETIME_STRING_STORAGE));
+        cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_DATETIME, r.getStartTimeString(Consts.START_DATETIME_STRING_STORAGE));
         cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_DISTANCE, r.getDistance());
         cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_DURATION, r.getDuration());
         cv.put(HistoryContract.HistoryEntry.COLUMN_NAME_RATING, r.getRating());

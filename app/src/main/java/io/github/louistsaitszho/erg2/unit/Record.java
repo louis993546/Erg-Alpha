@@ -1,5 +1,6 @@
 package io.github.louistsaitszho.erg2.unit;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.Comparator;
 import java.util.GregorianCalendar;
 
 import io.github.louistsaitszho.erg2.R;
+import io.github.louistsaitszho.erg2.utils.Consts;
 import io.github.louistsaitszho.erg2.utils.TimeAgo;
 
 /**
@@ -41,8 +43,9 @@ public class Record implements Serializable {
             return gc1.compareTo(gc2);
         }
     };
-    // Maybe attachment?
+    private Context context;
     private double distance; //in meter
+    // Maybe attachment?
     public static Comparator<Record> DistanceComparatorDESC = new Comparator<Record>() {
         @Override
         public int compare(Record lhs, Record rhs) {
@@ -69,7 +72,6 @@ public class Record implements Serializable {
             return d2.compareTo(d1);
         }
     };
-
     public static Comparator<Record> DurationComparatorASEC = new Comparator<Record>() {
         @Override
         public int compare(Record lhs, Record rhs) {
@@ -159,15 +161,26 @@ public class Record implements Serializable {
         double speed;
         switch (unit) {
             case METER_PER_SECOND:
-                speed = (distance / duration) / SECOND_TO_MILLISECOND;
+                speed = (getDistance() / getDuration()) / SECOND_TO_MILLISECOND;
                 break;
             case KM_PER_HOUR:
-                speed = ((distance / 1000) / HOUR_TO_SECOND) / SECOND_TO_MILLISECOND ;
+                double dur = (double) getDuration() / (Consts.HOW_MANY_MIN_IN_HOUR * Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MS_IN_S);
+                speed = (getDistance() / Consts.HOW_MANY_M_IN_KM) / dur;
                 break;
             default:
                 speed = (distance / duration) / SECOND_TO_MILLISECOND;  //return m/s
         }
         return speed;
+    }
+
+    public String getSpeedString() {
+        if (context != null) {
+            return ("" + getSpeed(KM_PER_HOUR) + context.getResources().getString(R.string.km_per_hour));
+        } else {
+            Log.d(TAG, "no context");
+            return ("" + getSpeed(KM_PER_HOUR));
+        }
+
     }
 
     @Override
@@ -184,7 +197,7 @@ public class Record implements Serializable {
     private String GCToString(GregorianCalendar gc, int style) {
         StringBuilder output = new StringBuilder();
         switch (style) {
-            case R.integer.START_DATETIME_STRING_STORAGE: //For storage
+            case Consts.START_DATETIME_STRING_STORAGE: //For storage
                 output.append(gc.get(Calendar.YEAR));
                 output.append("/");
                 output.append(gc.get(Calendar.MONTH));
@@ -195,7 +208,7 @@ public class Record implements Serializable {
                 output.append("/");
                 output.append(gc.get(Calendar.MINUTE));
                 break;
-            case R.integer.START_DATETIME_STRING_EXACT: //For display(the exact time)
+            case Consts.START_DATETIME_STRING_EXACT: //For display(the exact time)
                 output.append(gc.get(Calendar.YEAR));
                 output.append("/");
                 output.append(gc.get(Calendar.MONTH)+1);
@@ -206,7 +219,7 @@ public class Record implements Serializable {
                 output.append(":");
                 output.append(gc.get(Calendar.MINUTE));
                 break;
-            case R.integer.START_DATETIME_STRING_DIFFERENCE: //For display(time ago)
+            case Consts.START_DATETIME_STRING_DIFFERENCE: //For display(time ago)
                 output.append(TimeAgo.toTimeAgo(System.currentTimeMillis() - gc.getTimeInMillis()));
                 break;
         }
@@ -242,21 +255,21 @@ public class Record implements Serializable {
     }
 
     public String getDistanceString() {
-        return (distance + "m");
+        return (getDistance() + "m");
     }
 
     public String getDurationString() {
         int hour;
         int minute;
         int second;
-        int ms = duration;
+        int ms = getDuration();
         StringBuilder output = new StringBuilder();
-        hour = ms / (R.integer.HOW_MANY_MIN_IN_HOUR * R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
-        ms /= (R.integer.HOW_MANY_MIN_IN_HOUR * R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
-        minute = ms / (R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
-        ms %= (R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
-        second = ms / R.integer.HOW_MANY_MS_IN_S;
-        ms = (ms % R.integer.HOW_MANY_MS_IN_S) / 100;
+        hour = ms / (Consts.HOW_MANY_MIN_IN_HOUR * Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MS_IN_S);
+        ms %= (Consts.HOW_MANY_MIN_IN_HOUR * Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MS_IN_S);
+        minute = ms / (Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MS_IN_S);
+        ms %= (Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MS_IN_S);
+        second = ms / Consts.HOW_MANY_MS_IN_S;
+        ms = (ms % Consts.HOW_MANY_MS_IN_S) / 100;
         if (hour != 0) {
             output.append(hour).append(":");
         }
@@ -279,7 +292,7 @@ public class Record implements Serializable {
 //    public String getSpeedString() {}
 
     public String getRatingString() {
-        return (rating + " s/min");
+        return (getRating() + " s/min");
     }
 
     public String getPer500mString() {
@@ -289,15 +302,15 @@ public class Record implements Serializable {
         int millisecond;
         int ms = per500();
         StringBuilder output = new StringBuilder();
-        minute = ms / (R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
-        ms = ms % (R.integer.HOW_MANY_S_IN_MIN * R.integer.HOW_MANY_MS_IN_S);
-        second = ms / R.integer.HOW_MANY_MS_IN_S;
+        minute = ms / (Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MS_IN_S);
+        ms = ms % (Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MS_IN_S);
+        second = ms / Consts.HOW_MANY_MS_IN_S;
         if (second < 10) {
             secondString.append("0").append(second);
         } else {
             secondString.append(second);
         }
-        ms = ms % R.integer.HOW_MANY_MS_IN_S;
+        ms = ms % Consts.HOW_MANY_MS_IN_S;
         millisecond = ms / 100;
         output.append(minute).append(":").append(secondString).append(".").append(millisecond);    //DO NOT PUT UNIT HERE
         return output.toString();
@@ -306,5 +319,9 @@ public class Record implements Serializable {
     public int per500() {
         double a = getDistance() / 500;
         return (int) (getDuration() / a);
+    }
+
+    public void setContext(Context c) {
+        context = c;
     }
 }

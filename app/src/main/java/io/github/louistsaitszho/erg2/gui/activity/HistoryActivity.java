@@ -151,11 +151,9 @@ public class HistoryActivity extends ActionBarActivity {
     }
 
     public void recordActivity(View view, int whichOne) {
-        Log.d(TAG, "is this working?");
         Intent intent = new Intent(this, RecordActivity.class);
         Gson gson = new Gson();
         String recordTBD = gson.toJson(ral.get(whichOne));
-        Log.d(TAG, "is this gson string? " + recordTBD);
         intent.putExtra("theRecord", recordTBD);
         startActivity(intent);
     }

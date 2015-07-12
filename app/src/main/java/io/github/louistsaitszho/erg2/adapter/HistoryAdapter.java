@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import io.github.louistsaitszho.erg2.R;
 import io.github.louistsaitszho.erg2.unit.Record;
+import io.github.louistsaitszho.erg2.utils.Consts;
 
 /**
  * Created by Louis on 30/5/15.
@@ -108,7 +109,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     public String startDateTimeToString(Record r) {
-        return r.getStartTimeString(R.integer.START_DATETIME_STRING_DIFFERENCE);
+        return r.getStartTimeString(Consts.START_DATETIME_STRING_DIFFERENCE);
     }
 
     public static class ViewHolder2 extends RecyclerView.ViewHolder {
