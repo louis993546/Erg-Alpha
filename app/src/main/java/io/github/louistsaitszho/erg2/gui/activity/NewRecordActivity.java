@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 import io.github.louistsaitszho.erg2.R;
 import io.github.louistsaitszho.erg2.storage.HistoryDb;
 import io.github.louistsaitszho.erg2.unit.Record;
+import io.github.louistsaitszho.erg2.utils.Consts;
 
 public class NewRecordActivity extends ActionBarActivity {
 
@@ -136,7 +137,7 @@ public class NewRecordActivity extends ActionBarActivity {
                         else
                         {
                             duration += durationHour * Record.HOUR_TO_SECOND * Record.SECOND_TO_MILLISECOND;
-                            duration += durationMinute * Record.MINUTE_TO_SECOND * Record.SECOND_TO_MILLISECOND;
+                            duration += durationMinute * Consts.HOW_MANY_MS_IN_S * Record.SECOND_TO_MILLISECOND;
                             duration += durationSecond * Record.SECOND_TO_MILLISECOND;
                             return duration;
                         }

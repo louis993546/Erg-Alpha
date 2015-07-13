@@ -55,12 +55,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         int minute;
         int second;
         StringBuilder output = new StringBuilder();
-        hour = ms / HOUR_TO_MS;
-        ms = ms % HOUR_TO_MS;
-        minute = ms / MINUTE_TO_MS;
-        ms = ms % MINUTE_TO_MS;
-        second = ms / SECOND_TO_MS;
-        ms = (ms % SECOND_TO_MS)/100;
+        hour = ms / Consts.HOW_MANY_MS_IN_S / Consts.HOW_MANY_S_IN_MIN / Consts.HOW_MANY_MIN_IN_HOUR;
+        ms = ms % (Consts.HOW_MANY_MS_IN_S * Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MIN_IN_HOUR);
+        minute = ms / (Consts.HOW_MANY_MS_IN_S * Consts.HOW_MANY_S_IN_MIN);
+        ms = ms % (Consts.HOW_MANY_MS_IN_S * Consts.HOW_MANY_S_IN_MIN);
+        second = ms / Consts.HOW_MANY_MS_IN_S;
+        ms = (ms % Consts.HOW_MANY_MS_IN_S) / 100;
         if (hour != 0) {
             output.append(hour).append(":");
         }

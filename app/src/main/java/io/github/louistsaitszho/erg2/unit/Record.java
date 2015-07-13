@@ -23,7 +23,6 @@ public class Record implements Serializable {
     public static final int KM_PER_HOUR = 2;
 
     public static final int SECOND_TO_MILLISECOND = 1000;
-    public static final int MINUTE_TO_SECOND = 60;
     public static final int HOUR_TO_SECOND = 3600;
 
     private static final double DEFAULT_DISTANCE = 7000;
@@ -174,14 +173,14 @@ public class Record implements Serializable {
         double speed;
         switch (unit) {
             case METER_PER_SECOND:
-                speed = (getDistance() / getDuration()) / SECOND_TO_MILLISECOND;
+                speed = (getDistance() / getDuration()) / Consts.HOW_MANY_MS_IN_S;
                 break;
             case KM_PER_HOUR:
                 double dur = (double) getDuration() / (Consts.HOW_MANY_MIN_IN_HOUR * Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MS_IN_S);
                 speed = (getDistance() / Consts.HOW_MANY_M_IN_KM) / dur;
                 break;
             default:
-                speed = (distance / duration) / SECOND_TO_MILLISECOND;  //return m/s
+                speed = (distance / duration) / Consts.HOW_MANY_MS_IN_S;  //return m/s
         }
         return speed;
     }

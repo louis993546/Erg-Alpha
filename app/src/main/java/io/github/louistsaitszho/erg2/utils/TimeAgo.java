@@ -5,39 +5,39 @@ package io.github.louistsaitszho.erg2.utils;
  */
 public class TimeAgo {
     public final static long MILLISECOND = 1;
-    public final static long SECOND = 1000 * MILLISECOND;
-    public final static long MINUTE = 60 * SECOND;
-    public final static long HOUR = 60 * MINUTE;
-    public final static long DAY = 24 * HOUR;
-    public final static long WEEK = 7 * DAY;
-    public final static long MONTH = (int) (30.4375 * DAY);
-    public final static long YEAR = (int) (365.25 * DAY);
+    public final static long SECOND = Consts.HOW_MANY_MS_IN_S * MILLISECOND;
+    public final static long MINUTE = Consts.HOW_MANY_S_IN_MIN * SECOND;
+    public final static long HOUR = Consts.HOW_MANY_MIN_IN_HOUR * MINUTE;
+    public final static long DAY = Consts.HOW_MANY_HOUR_IN_DAY * HOUR;
+    public final static long WEEK = Consts.HOW_MANY_DAY_IN_WEEK * DAY;
+    public final static long MONTH = (long) (30.4375 * DAY);
+    public final static long YEAR = (long) (365.25 * DAY);
 
     public static String toTimeAgo(long dateMsDiff) {
         if (dateMsDiff < MINUTE)
             return "Just now";
-        if (dateMsDiff < 2 * MINUTE)
+        else if (dateMsDiff < 2 * MINUTE)
             return "A minute ago";
-        if (dateMsDiff < 50 * MINUTE)
+        else if (dateMsDiff < 50 * MINUTE)
             return (dateMsDiff / MINUTE + " minutes ago");
-        if (dateMsDiff < 80 * MINUTE)
+        else if (dateMsDiff < 80 * MINUTE)
             return "An hour ago";
-        if (dateMsDiff < 24 * HOUR)
+        else if (dateMsDiff < 24 * HOUR)
             return (dateMsDiff / HOUR + " hours ago");
-        if (dateMsDiff < 36 * HOUR)
+        else if (dateMsDiff < 36 * HOUR)
             return ("A day ago");
-        if (dateMsDiff < WEEK)
+        else if (dateMsDiff < WEEK)
             return (dateMsDiff / DAY + " days ago");
-        if (dateMsDiff < 2 * WEEK)
+        else if (dateMsDiff < 2 * WEEK)
             return "A week ago";
-        if (dateMsDiff < MONTH)
+        else if (dateMsDiff < MONTH)
             return (dateMsDiff / WEEK + " weeks ago");
-        if (dateMsDiff < 2 * MONTH)
+        else if (dateMsDiff < 2 * MONTH)
             return "A month ago";
-        if (dateMsDiff < YEAR)
+        else if (dateMsDiff < YEAR)
             return (dateMsDiff / MONTH + " months ago");
-        if (dateMsDiff < 2 * YEAR)
+        else if (dateMsDiff < 2 * YEAR)
             return "A year ago";
-        return (dateMsDiff / YEAR + " years ago");
+        else return (dateMsDiff / YEAR + " years ago");
     }
 }
