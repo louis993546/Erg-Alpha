@@ -136,9 +136,9 @@ public class NewRecordActivity extends ActionBarActivity {
                         }
                         else
                         {
-                            duration += durationHour * Record.HOUR_TO_SECOND * Record.SECOND_TO_MILLISECOND;
-                            duration += durationMinute * Consts.HOW_MANY_MS_IN_S * Record.SECOND_TO_MILLISECOND;
-                            duration += durationSecond * Record.SECOND_TO_MILLISECOND;
+                            duration += durationHour * Consts.HOW_MANY_MIN_IN_HOUR * Consts.HOW_MANY_S_IN_MIN * Consts.HOW_MANY_MS_IN_S;
+                            duration += durationMinute * Consts.HOW_MANY_MS_IN_S * Consts.HOW_MANY_S_IN_MIN;
+                            duration += durationSecond * Consts.HOW_MANY_MS_IN_S;
                             return duration;
                         }
                     } else {
