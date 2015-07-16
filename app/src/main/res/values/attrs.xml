@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LongCard">
+        <attr name="durationText" format="string" />
+        <attr name="ratingText" format="string" />
+        <attr name="per500Text" format="string" />
+        <attr name="distanceText" format="string" />
+        <attr name="timeAgoText" format="string" />
+        <attr name="avg500Text" format="string" />
+        <attr name="speedText" format="string" />
+    </declare-styleable>
+
+</resources>
